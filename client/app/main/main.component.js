@@ -4,20 +4,46 @@ import routing from './main.routes';
 
 export class MainController {
   awesomeThings = [];
-  newThing = '';
+  newThing = [];
 
   /*@ngInject*/
-  constructor($http, $scope, socket) {
+  constructor($http, $scope, socket, leafletData) {
     this.$http = $http;
     this.socket = socket;
-    $scope.data = [];
+    this.$scope = $scope;
+    this.leafletData = leafletData;
+    $scope.geojson = {};
     $scope.center = {
       lat: -7.8142185,
       lng: 110.368708,
       zoom: 15
-    };  
-    
-    $scope.$on('$destroy', function() {
+    };
+
+    $scope.getData = function () {
+      $http.get('http://localhost:3000/assets/data/rdtr.geojson')
+        .then (response => {
+          $scope.geojson = response;
+          angular.extend($scope.map.layers.overlays, {
+            geojson: {
+                data: response.data,
+                name: 'RDTR JSON',
+                type:'geoJSONShape',
+                resetStyleOnMouseout: true,
+                style: {
+                    fillColor: "green",
+                    weight: 2,
+                    //opacity: 1,
+                    color: 'white',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                }
+            }
+        });
+        });
+    }
+
+
+    $scope.$on('$destroy', function () {
       socket.unsyncUpdates('thing');
     });
 
@@ -29,13 +55,13 @@ export class MainController {
             type: "xyz",
             url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
             layerOptions: {
-                subdomains: ["a", "b", "c"],
-                attribution: "&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
-                continuousWorld: true
+              subdomains: ["a", "b", "c"],
+              attribution: "&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
+              continuousWorld: true
             }
-        }
+          }
         },
-        overlays: { 
+        overlays: {
           rdtr: {
             name: 'RDTR',
             type: 'wms',
@@ -70,23 +96,41 @@ export class MainController {
       }
     }; //map
 
-  }
+  } //constructor
+
+
 
   $onInit() {
-    /*
+    this.$scope.getData();  
+
+    
+    
+    
+  };
+}
+
+
+
+
+
+export default angular.module('starlingApp.main', [uiRouter])
+  .config(routing)
+  .component('main', {
+    template: require('./main.html'),
+    controller: MainController
+  })
+  .name;
+
+
+
+  // -----------------------------------------
+
+   /*
     this.$http.get('/api/things')
       .then(response => {
         this.awesomeThings = response.data;
         this.socket.syncUpdates('thing', this.awesomeThings);
-      });
-    */
-      console.log(this.map)
-
-      
-       // Get the countries geojson data from a JSON
-       
-       this.$http.get("/assets/data/rdtr.geojson")
-       .then(function(data, status) {
+        
         angular.extend(this.map.layers.overlays, {
             geojson: {
                 data: data,
@@ -100,17 +144,4 @@ export class MainController {
                 }
             }
         });
-
-        console.log(status);
-    }); 
-  }
-
-}
-
-export default angular.module('starlingApp.main', [uiRouter])
-  .config(routing)
-  .component('main', {
-    template: require('./main.html'),
-    controller: MainController
-  })
-  .name;
+    */
