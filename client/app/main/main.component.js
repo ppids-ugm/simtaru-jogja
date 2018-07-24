@@ -11,59 +11,61 @@ export class MainController {
     this.$http = $http;
     this.socket = socket;
     $scope.data = [];
-    $scope.infocontent = {};
-    $scope.openinfowindow = false;
-    $scope.collapseSidebar = false;
-
     $scope.center = {
-      lat: -1.866007882805485,
-      lng: 120.44335937499999,
-      zoom: 5
-    };
-
+      lat: -7.8142185,
+      lng: 110.368708,
+      zoom: 15
+    };  
+    
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('thing');
     });
 
-    this.map = {
+    $scope.map = {
       layers: {
         baselayers: {
-          Esri_OceanBasemap: {
-            name: 'ESRI Ocean',
-            type: 'xyz',
-            url: 'http://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}',
+          osm: {
+            name: "OpenStreetMap",
+            type: "xyz",
+            url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
             layerOptions: {
-              showOnSelector: false,
-              attribution: 'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri',
-              maxZoom: 13
+                subdomains: ["a", "b", "c"],
+                attribution: "&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
+                continuousWorld: true
             }
-          }
-        },
-        overlays: {
-          OpenMapSurfer_AdminBounds: {
-            name: 'OpenMapSurfer',
-            type: 'xyz',
-            visible: true,
-            url: 'http://korona.geog.uni-heidelberg.de/tiles/adminb/x={x}&y={y}&z={z}',
-            layerOptions: {
-              showOnSelector: false,
-              maxZoom: 19,
-              attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            }
-          }
         }
-      },
-      controls: {},
-      events: {
-        marker: {
-          enable: ['click', 'popupopen', 'popupclose'],
-          logic: 'emit'
         },
-        map: {
-          enable: ['context', 'zoomstart', 'drag', 'click',
-            'mousemove'
-          ],
-          logic: 'emit'
+        overlays: { 
+          rdtr: {
+            name: 'RDTR',
+            type: 'wms',
+            visible: false,
+            enable: false,
+            url: 'http://localhost:8080/geoserver/simtaru/wms',
+            layerOptions: {
+              layers: 'simtaru:rdtr',
+              format: 'image/png',
+              opacity: 0.75,
+              //width:629,
+              //height:768,
+              crs: L.CRS.EPSG4326
+            }
+          },
+          rdtrprov: {
+            name: 'RDTR Provinsi',
+            type: 'wms',
+            visible: true,
+            url: 'http://gis.jogjaprov.go.id:8080/geoserver/geonode/wms/',
+            layerOptions: {
+              layers: 'geonode:pola_ruang_rdtr_kota_jogja',
+              format: 'image/png',
+              opacity: 0.75,
+              version: '1.1.0',
+              //width:629,
+              //height:768,
+              crs: L.CRS.EPSG4326
+            }
+          }
         }
       }
     }; //map
@@ -71,25 +73,38 @@ export class MainController {
   }
 
   $onInit() {
+    /*
     this.$http.get('/api/things')
       .then(response => {
         this.awesomeThings = response.data;
         this.socket.syncUpdates('thing', this.awesomeThings);
       });
+    */
+      console.log(this.map)
+
+      
+       // Get the countries geojson data from a JSON
+       
+       this.$http.get("/assets/data/rdtr.geojson")
+       .then(function(data, status) {
+        angular.extend(this.map.layers.overlays, {
+            geojson: {
+                data: data,
+                style: {
+                    fillColor: "green",
+                    weight: 2,
+                    opacity: 1,
+                    color: 'white',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                }
+            }
+        });
+
+        console.log(status);
+    }); 
   }
 
-  addThing() {
-    if(this.newThing) {
-      this.$http.post('/api/things', {
-        name: this.newThing
-      });
-      this.newThing = '';
-    }
-  }
-
-  deleteThing(thing) {
-    this.$http.delete(`/api/things/${thing._id}`);
-  }
 }
 
 export default angular.module('starlingApp.main', [uiRouter])
