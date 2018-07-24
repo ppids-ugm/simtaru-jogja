@@ -5,24 +5,32 @@
   <!-- Main content -->
   <section class="content container-fluid">
     <div class="row">
-     
+      <section class="col-lg-4 connectedSortable ui-sortable">
+          <div class="box-body border-radius-none">
+            <p><strong>Zona: </strong>{{mouseOver.Zona}}</p>
+          </div>
+      </section>
+      <section class="col-lg-4 connectedSortable ui-sortable">
+          <div class="box-body border-radius-none">
+            <p><strong>Sub-Zona: </strong>{{mouseOver.Sub_Zona}}</p>
+          </div>
+      </section>
+      <section class="col-lg-4 connectedSortable ui-sortable">
+          <div class="box-body border-radius-none">
+            <p><strong>Pola Ruang: </strong>{{mouseOver.Pola_Ruang}}</p>
+          </div>
+      </section>
     </div>
     <div class="row">
       <section class="col-lg-12 connectedSortable ui-sortable">
-        
-        <leaflet height="86vh" width="100%" geojson="geojson" layers="map.layers" lf-center="center">
+
+        <leaflet height="80vh" width="100%" geojson="map.layers.overlays.geojson" layers="map.layers" lf-center="center">
           <!--layercontrol order="normal" icons="layercontrol.icons" auto-hide-opacity="true" show-groups="true"
             title="Layer Manager" base-title="Base Layers" overlays-title="Overlays Layers"></layercontrol-->
         </leaflet>
       </section>
     </div>
 
-
-
-
-    <!--------------------------
-          | Your Page Content Here |
-          -------------------------->
 
   </section>
   <!-- /.content -->

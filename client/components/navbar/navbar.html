@@ -55,7 +55,7 @@
           <!-- /.messages-menu -->
 
           <!-- Notifications Menu -->
-          <li class="dropdown notifications-menu">
+          <li class="dropdown notifications-menu" style="display: none">
             <!-- Menu toggle button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
@@ -78,7 +78,7 @@
             </ul>
           </li>
           <!-- Tasks Menu -->
-          <li class="dropdown tasks-menu">
+          <li class="dropdown tasks-menu"  style="display: none">
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-flag-o"></i>
@@ -206,7 +206,8 @@
 
     <!-- Sidebar Menu -->
     <ul class="sidebar-menu" data-widget="tree">
-      <li class="header">HEADER</li>
+      <li class="header">Daftar Menu</li>
+      <li> </li>
       <!-- Optionally, you can add icons to the links -->
       <li class="active"><a href="/"><i class="fa fa-link"></i> <span>Peta</span></a></li>
       <li><a href="/adminlte"><i class="fa fa-link"></i> <span>Dashboard</span></a></li>
@@ -244,23 +245,24 @@
   <div class="tab-content">
     <!-- Home tab content -->
     <div class="tab-pane active" id="control-sidebar-home-tab">
-      <h3 class="control-sidebar-heading">Recent Activity</h3>
+      <h3 class="control-sidebar-heading" style="text-align: center">
+        Kotak Perkakas</h3>
       <ul class="control-sidebar-menu">
         <li>
           <a href="javascript:;">
-            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+            <i class="menu-icon fas fa-toolbox bg-red"></i>
 
             <div class="menu-info">
-              <h4 class="control-sidebar-subheading">Progress Peta</h4>
+              <h4 class="control-sidebar-subheading">Simulasi</h4>
 
-              <p>Will be 23 on April 24th</p>
+              <p>Simulasi Zonasi Ruang</p>
             </div>
           </a>
         </li>
       </ul>
       <!-- /.control-sidebar-menu -->
 
-      <h3 class="control-sidebar-heading">Tasks Progress</h3>
+      <!--h3 class="control-sidebar-heading">Legenda Peta</h3>
       <ul class="control-sidebar-menu">
         <li>
           <a href="javascript:;">
@@ -276,7 +278,7 @@
             </div>
           </a>
         </li>
-      </ul>
+      </ul-->
       <!-- /.control-sidebar-menu -->
 
     </div>
@@ -286,21 +288,11 @@
     <!-- /.tab-pane -->
     <!-- Settings tab content -->
     <div class="tab-pane" id="control-sidebar-settings-tab">
-      <form method="post">
-        <h3 class="control-sidebar-heading">General Settings</h3>
+      
+        <h3 class="control-sidebar-heading">Legenda Peta</h3>
 
-        <div class="form-group">
-          <label class="control-sidebar-subheading">
-            Report panel usage
-            <input type="checkbox" class="pull-right" checked>
-          </label>
-
-          <p>
-            Some information about this general settings option
-          </p>
-        </div>
         <!-- /.form-group -->
-      </form>
+      
     </div>
     <!-- /.tab-pane -->
   </div>
