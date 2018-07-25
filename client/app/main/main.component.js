@@ -7,12 +7,13 @@ export class MainController {
   newThing = [];
 
   /*@ngInject*/
-  constructor($http, $scope, $rootScope, socket, leafletData) {
+  constructor(Auth, $http, $scope, $rootScope, socket, leafletData) {
     this.$http = $http;
     this.socket = socket;
     this.$scope = $scope;
     this.rootScope = $rootScope;
     this.leafletData = leafletData;
+    this.isLoggedIn = Auth.isLoggedInSync;
     $scope.mouseOver = {};
     $scope.geojson = {};
     $scope.center = {
@@ -55,6 +56,7 @@ export class MainController {
 
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('thing');
+      console.log(this.isLoggedIn)
     });
 
 
@@ -68,6 +70,17 @@ export class MainController {
             layerOptions: {
               subdomains: ["a", "b", "c"],
               attribution: "&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
+              continuousWorld: true
+            }
+          },
+          esri: {
+            name: "Carto Positron",
+            type: "xyz",
+            url: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png",
+            layerOptions: {
+              subdomains: 'abcd',
+              maxZoom: 19,
+              attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
               continuousWorld: true
             }
           }
@@ -91,7 +104,7 @@ export class MainController {
             layerParams: {
               showOnSelector: false
             }
-          },*/
+          },
           rdtrprov: {
             name: 'RDTR Kota Yogyakarta',
             type: 'wms',
@@ -104,7 +117,7 @@ export class MainController {
               version: '1.1.0',
               crs: L.CRS.EPSG4326
             }
-          }
+          } */
         }
       }
     }; //map

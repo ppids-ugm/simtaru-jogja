@@ -32,7 +32,7 @@ import './app.scss';
 
 angular.module('starlingApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter,
   _Auth, account, admin, 'validation.match', navbar, footer, main, constants, AdminlteComponent,
-  socket, util, 'nemLogging', 'ui-leaflet'//, 'hl.css.ui.router'
+  socket, util, 'nemLogging', 'ui-leaflet'
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {
