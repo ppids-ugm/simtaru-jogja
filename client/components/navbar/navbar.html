@@ -131,7 +131,7 @@
             <!-- The user image in the navbar-->
             <img src="http://via.placeholder.com/160x160" class="user-image" alt="User Image">
             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-            <span class="hidden-xs">Simtaru-WebGIS</span>
+            <span class="hidden-xs">admin</span>
           </a>
           <ul class="dropdown-menu">
             <!-- The user image in the menu -->
@@ -139,12 +139,12 @@
               <img src="http://via.placeholder.com/160x160" class="img-circle" alt="User Image">
 
               <p>
-                Dany Laksono - Web Developer
+                Dany Laksono - Admin
                 <small>Member since Nov. 2012</small>
               </p>
             </li>
             <!-- Menu Body -->
-            <li ng-if="$!ctrl.debugMode" class="user-body">
+            <li ng-if="!$ctrl.debugMode" class="user-body">
               <div class="row">
                 <div class="col-xs-4 text-center">
                   <a href="#">Followers</a>

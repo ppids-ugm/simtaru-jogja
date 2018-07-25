@@ -54,7 +54,7 @@ module.exports = function makeWebpackConfig(options) {
                 'angular-socket-io',
                 //'angular-ui-bootstrap',
                 'angular-ui-router',
-                'angular-ui-router-css',
+                //'angular-ui-router-css',
                 'lodash',
                 'leaflet',
                 'angular-simple-logger',

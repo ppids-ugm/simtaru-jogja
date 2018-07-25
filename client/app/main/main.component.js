@@ -24,40 +24,59 @@ export class MainController {
     };
 
 
-    /*
-    $scope.getData = function () {
-      $http.get('http://localhost:3000/assets/data/rdtr.geojson')
-        .then(response => {
-          $scope.geojson = response;
-          /*
-          angular.extend($scope.map.layers.overlays, {
-            geojson: {
-              data: response,
-              name: 'RDTR JSON',
-              type: 'geoJSONShape',
-              //enable: true,
-              visible: true, 
-              //resetStyleOnMouseout: true,
-              layerOptions: {
-                style: {
-                  //fillColor: "green",
-                  //weight: 0,
-                  'opacity': 0
-                  //color: 'white',
-                  //dashArray: '0',
-                  //fillOpacity: 0
-                }
-              },
-              layerParams: {
-                showOnSelector: true
-              }
-            } 
-          });
-          
-        });
-    }; //getdata
-    */
 
+    $scope.getData = function () {
+      $http.get('/assets/data/rdtr.geojson')
+        .then(response => {
+          console.log(response.data);
+          angular.extend($scope, {
+            geojson: {
+                data: response.data,
+                style: {
+                    fillColor: "green",
+                    weight: 2,
+                    opacity: 1,
+                    color: 'white',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                }
+            }
+        });
+    });
+  }
+    //$scope.geojson = response;
+
+
+    /*
+    angular.extend($scope.map.layers.overlays, {
+      geojson: {
+        data: response.data,
+        name: 'RDTR JSON',
+        type: 'geoJSONShape',
+        //enable: true,
+        visible: true, 
+        //resetStyleOnMouseout: true,
+        layerOptions: {
+          style: {
+            //fillColor: "green",
+            //weight: 0,
+            'opacity': 0
+            //color: 'white',
+            //dashArray: '0',
+            //fillOpacity: 0
+          }
+        },
+        layerParams: {
+          showOnSelector: true
+        }
+      } 
+    });
+  
+  });
+  
+}; //getdata
+ 
+*/
 
     $scope.map = {
       layers: {
@@ -131,11 +150,11 @@ export class MainController {
     $scope.$on('leafletDirectiveMap.click', function (ev, args) {
       //console.log(args.leafletEvent.latlng); 
       var lEvent = args.leafletEvent.latlng;
-      var popup = L.popup({ offset: L.point(0, -0.3)})
-                  .setLatLng(lEvent)  //[lEvent.lat, lEvent.lng])
-                  .setContent("here")
-      leafletData.getMap().then(function(map) {
-         popup.openOn(map);
+      var popup = L.popup({ offset: L.point(0, -0.3) })
+        .setLatLng(lEvent)  //[lEvent.lat, lEvent.lng])
+        .setContent("here")
+      leafletData.getMap().then(function (map) {
+        popup.openOn(map);
       });
 
     });
@@ -149,7 +168,7 @@ export class MainController {
 
 
   $onInit() {
-    //this.$scope.getData();
+    this.$scope.getData();
     this.$http.get('/api/things')
       .then(response => {
         this.awesomeThings = response.data;

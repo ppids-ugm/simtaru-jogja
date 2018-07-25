@@ -3,17 +3,17 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-          Simtaru
-          <small>Sistem Informasi Pertanahan</small>
+            Simtaru
+            <small>Sistem Informasi Pertanahan</small>
         </h1>
         <ol class="breadcrumb">
-          <li>
-            <a href="#">
-              <i class="fa fa-dashboard"></i> Main</a>
-          </li>
-          <li class="active">Dashboard</li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-dashboard"></i> Main</a>
+            </li>
+            <li class="active">Dashboard</li>
         </ol>
-      </section>
+    </section>
 
     <!-- Main content -->
     <section class="content container-fluid">
@@ -22,9 +22,9 @@
                 <!-- small box -->
                 <div class="small-box bg-aqua">
                     <div class="inner">
-                        <h3>150</h3>
+                        <h3>15000</h3>
 
-                        <p>New Orders</p>
+                        <p>Total Persil</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
@@ -39,11 +39,11 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3>53
+                        <h3>79
                             <sup style="font-size: 20px">%</sup>
                         </h3>
 
-                        <p>Bounce Rate</p>
+                        <p>Total Terdaftar</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
@@ -58,9 +58,9 @@
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3>44</h3>
+                        <h3>4400</h3>
 
-                        <p>User Registrations</p>
+                        <p>Total SG</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
@@ -75,9 +75,9 @@
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h3>65</h3>
+                        <h3>650</h3>
 
-                        <p>Unique Visitors</p>
+                        <p>Atribut</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
@@ -90,7 +90,7 @@
             <!-- ./col -->
         </div>
         <div class="row">
-            <section class="col-lg-5 connectedSortable ui-sortable">
+            <section class="col-lg-9 connectedSortable ui-sortable">
                 <!-- Map box -->
                 <div class="box box-solid bg-light-blue-gradient">
                     <div class="box-header ui-sortable-handle" style="cursor: move;">
@@ -109,16 +109,11 @@
                         <i class="fa fa-map-marker"></i>
 
                         <h3 class="box-title">
-                            Visitors
+                            Peta Tanah Kasultanan dan Kadipaten
                         </h3>
                     </div>
                     <div class="box-body">
-                        <div id="world-map" style="height: 250px; width: 100%;">
-                            <div class="jvectormap-container" style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: transparent;">
-                                <div class="jvectormap-zoomin">+</div>
-                                <div class="jvectormap-zoomout">−</div>
-                            </div>
-                        </div>
+                        <leaflet height="50vh" width="100%"  layers="$adminlteCtrl.map.layers" center="$adminlteCtrl.center">
                     </div>
                     <!-- /.box-body-->
                     <div class="box-footer no-border">
@@ -129,13 +124,13 @@
                 </div>
                 <!-- /.box -->
             </section>
-            <section class="col-lg-7 connectedSortable ui-sortable">
+            <section class="col-lg-3 connectedSortable ui-sortable">
                 <!-- solid sales graph -->
                 <div class="box box-solid bg-teal-gradient">
                     <div class="box-header ui-sortable-handle" style="cursor: move;">
                         <i class="fa fa-th"></i>
 
-                        <h3 class="box-title">Sales Graph</h3>
+                        <h3 class="box-title">Analisis Spasial</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn bg-teal btn-sm" data-widget="collapse">
@@ -154,7 +149,7 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer no-border">
-                       
+
                     </div>
                     <!-- /.box-footer -->
                 </div>
