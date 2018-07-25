@@ -23,12 +23,8 @@ export class MainController {
       zoom: 17
     };
 
-    $scope.$on('$destroy', function () {
-      socket.unsyncUpdates('thing');
 
-    });
-
-      
+    /*
     $scope.getData = function () {
       $http.get('http://localhost:3000/assets/data/rdtr.geojson')
         .then(response => {
@@ -57,10 +53,10 @@ export class MainController {
               }
             } 
           });
-          */
+          
         });
     }; //getdata
-    
+    */
 
 
     $scope.map = {
@@ -132,17 +128,38 @@ export class MainController {
       //console.log($scope.mouseOver);
     });
 
+    $scope.$on('leafletDirectiveMap.click', function (ev, args) {
+      //console.log(args.leafletEvent.latlng); 
+      var lEvent = args.leafletEvent.latlng;
+      var popup = L.popup({ offset: L.point(0, -0.3)})
+                  .setLatLng(lEvent)  //[lEvent.lat, lEvent.lng])
+                  .setContent("here")
+      leafletData.getMap().then(function(map) {
+         popup.openOn(map);
+      });
+
+    });
+
+
+
+
+
   } //constructor
 
 
 
   $onInit() {
-    this.$scope.getData();
+    //this.$scope.getData();
+    this.$http.get('/api/things')
+      .then(response => {
+        this.awesomeThings = response.data;
+        this.socket.syncUpdates('thing', this.awesomeThings);
+      });
+
+
   };
-}
 
-
-
+} //controller
 
 
 export default angular.module('starlingApp.main', [uiRouter])
@@ -152,30 +169,4 @@ export default angular.module('starlingApp.main', [uiRouter])
     controller: MainController
   })
   .name;
-
-
-
-  // -----------------------------------------
-
-   /*
-    this.$http.get('/api/things')
-      .then(response => {
-        this.awesomeThings = response.data;
-        this.socket.syncUpdates('thing', this.awesomeThings);
-        
-        angular.extend(this.map.layers.overlays, {
-            geojson: {
-                data: data,
-                style: {
-                    fillColor: "green",
-                    weight: 2,
-                    opacity: 1,
-                    color: 'white',
-                    dashArray: '3',
-                    fillOpacity: 0.7
-                }
-            }
-        });
-    */
-
 
