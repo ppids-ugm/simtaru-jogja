@@ -13,13 +13,12 @@ export class NavbarComponent {
 
   constructor(Auth) {
     'ngInject';
-    
+
 
     this.isLoggedIn = Auth.isLoggedInSync;
     this.isAdmin = Auth.isAdminSync;
     this.getCurrentUser = Auth.getCurrentUserSync;
 
-    
 
   }
 
@@ -27,7 +26,9 @@ export class NavbarComponent {
 
 
   $onInit() {
-
+    this.getCurrentUser(function(me) {
+      console.log('me.email', me);
+    });
   };
 
 

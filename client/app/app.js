@@ -27,20 +27,24 @@ import constants from './app.constants';
 import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
 import AdminlteComponent from './adminlte/adminlte.component';
+import dataFactory from './dataFactory/dataFactory.service';
 
 import './app.scss';
 
 angular.module('starlingApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter,
   _Auth, account, admin, 'validation.match', navbar, footer, main, constants, AdminlteComponent,
-  socket, util, 'nemLogging', 'ui-leaflet'
+  socket, util, 'nemLogging', 'ui-leaflet', dataFactory
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {
     'ngInject';
     // Redirect to login if route requires auth and you're not logged in
 
+    
+
     $rootScope.$on('$stateChangeStart', function(event, next) {
       Auth.isLoggedIn(function(loggedIn) {
+        $rootScope.authIsLoggedIn = loggedIn;
         if(next.authenticate && !loggedIn) {
           $location.path('/login');
         }

@@ -7,73 +7,66 @@ export class MainController {
   newThing = [];
 
   /*@ngInject*/
-  constructor(Auth, $http, $scope, $rootScope, socket, leafletData) {
+  constructor(Auth, $http, $scope, socket, leafletData) {
     this.$http = $http;
     this.socket = socket;
     this.$scope = $scope;
-    this.rootScope = $rootScope;
+    //this.rootScope = $rootScope;
     this.leafletData = leafletData;
-    this.isLoggedIn = Auth.isLoggedInSync;
+    //$scope.fromFactory = dataFactory;
+    this.auth = Auth;
     $scope.mouseOver = {};
     $scope.geojson = {};
     $scope.center = {
-      lat: -7.8142185,
-      lng: 110.368708,
-      zoom: 15
+      lat: -7.7830961,
+      lng: 110.3666712,
+      zoom: 17
     };
 
+    $scope.$on('$destroy', function () {
+      socket.unsyncUpdates('thing');
+
+    });
+
+      
     $scope.getData = function () {
       $http.get('http://localhost:3000/assets/data/rdtr.geojson')
         .then(response => {
           $scope.geojson = response;
+          /*
           angular.extend($scope.map.layers.overlays, {
             geojson: {
-              data: response.data,
+              data: response,
               name: 'RDTR JSON',
               type: 'geoJSONShape',
               //enable: true,
-              //visible: true,
+              visible: true, 
               //resetStyleOnMouseout: true,
-              style: {
-                //fillColor: "green",
-                //weight: 0,
-                'opacity': 0,
-                color: 'rgba(0,0,0,0)'
-                //color: 'white',
-                //dashArray: '0',
-                //fillOpacity: 0
+              layerOptions: {
+                style: {
+                  //fillColor: "green",
+                  //weight: 0,
+                  'opacity': 0
+                  //color: 'white',
+                  //dashArray: '0',
+                  //fillOpacity: 0
+                }
               },
               layerParams: {
-                showOnSelector: false
+                showOnSelector: true
               }
-              //onEachFeature : onEachFeature
-            }
+            } 
           });
-
+          */
         });
-    }
-
-
-    $scope.$on('$destroy', function () {
-      socket.unsyncUpdates('thing');
-      console.log(this.isLoggedIn)
-    });
+    }; //getdata
+    
 
 
     $scope.map = {
       layers: {
         baselayers: {
-          osm: {
-            name: "OpenStreetMap",
-            type: "xyz",
-            url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-            layerOptions: {
-              subdomains: ["a", "b", "c"],
-              attribution: "&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
-              continuousWorld: true
-            }
-          },
-          esri: {
+          carto: {
             name: "Carto Positron",
             type: "xyz",
             url: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png",
@@ -81,6 +74,16 @@ export class MainController {
               subdomains: 'abcd',
               maxZoom: 19,
               attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+              continuousWorld: true
+            }
+          },
+          osm: {
+            name: "OpenStreetMap",
+            type: "xyz",
+            url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            layerOptions: {
+              subdomains: ["a", "b", "c"],
+              attribution: "&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
               continuousWorld: true
             }
           }
@@ -104,7 +107,7 @@ export class MainController {
             layerParams: {
               showOnSelector: false
             }
-          },
+          }, */
           rdtrprov: {
             name: 'RDTR Kota Yogyakarta',
             type: 'wms',
@@ -117,7 +120,7 @@ export class MainController {
               version: '1.1.0',
               crs: L.CRS.EPSG4326
             }
-          } */
+          }
         }
       }
     }; //map
@@ -129,22 +132,12 @@ export class MainController {
       //console.log($scope.mouseOver);
     });
 
-
-
-
-
-
-
   } //constructor
 
 
 
   $onInit() {
     this.$scope.getData();
-
-
-
-
   };
 }
 
@@ -186,38 +179,3 @@ export default angular.module('starlingApp.main', [uiRouter])
     */
 
 
-    /*
-
-   $http.get("countries.geo.json").success(function(data, status) {
-    angular.extend($scope.layers.overlays, {
-      countries: {
-        name:'World Country Boundaries',
-        type: 'geoJSONShape',
-        data: data,
-        visible: true,
-        layerOptions: {
-          style: {
-            color: '#00D',
-            fillColor: 'red',
-            weight: 2.0,
-            opacity: 0.6,
-            fillOpacity: 0.2
-          },
-          onEachFeature: onEachFeature
-        }
-
-      }
-    });
-
-    function onEachFeature(feature, layer) {
-      layer.on({
-        click: function() {
-          console.log(layer.feature.properties.name);
-          $scope.country = layer.feature.properties.name;
-
-        }
-      })
-    }
-  });
-
-  */

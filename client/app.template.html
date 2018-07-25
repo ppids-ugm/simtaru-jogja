@@ -5,7 +5,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <base href="/">
     <title>Simtaru WebGIS</title>
-    <meta name="A WebGIS Framework for Fullstack Developers" content="">
+    <meta name="Sistem informasi tata ruang dan pertanahan Kota Yogyakarta" content="">
     <meta name="viewport" content="width=device-width">
     <!--script src="https://code.jquery.com/jquery-3.2.1.min.js"></script-->
     <!--script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script-->
@@ -27,7 +27,7 @@
       ga('send', 'pageview');
     </script>
 
-    <navbar ng-show="nav.isLoggedIn()"></navbar>
+    <navbar ng-if="authIsLoggedIn"></navbar>
     <div ui-view=""></div>
     <footer></footer>
 </body>
