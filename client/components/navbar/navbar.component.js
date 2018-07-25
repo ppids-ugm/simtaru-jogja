@@ -11,6 +11,10 @@ export class NavbarComponent {
 
   isCollapsed = true;
 
+  
+
+  debugMode = true;
+
   constructor(Auth) {
     'ngInject';
 
