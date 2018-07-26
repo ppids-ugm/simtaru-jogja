@@ -29,19 +29,7 @@ export class MainController {
       $http.get('/assets/data/rdtr.geojson')
         .then(response => {
           console.log(response.data);
-          angular.extend($scope, {
-            geojson: {
-                data: response.data,
-                style: {
-                    fillColor: "green",
-                    weight: 2,
-                    opacity: 1,
-                    color: 'white',
-                    dashArray: '3',
-                    fillOpacity: 0.7
-                }
-            }
-        });
+          $scope.geojson = response.data;
     });
   }
     //$scope.geojson = response;
@@ -104,7 +92,6 @@ export class MainController {
           }
         },
         overlays: {
-          /*
           rdtr: {
             name: 'RDTR lokal',
             type: 'wms',
@@ -122,7 +109,7 @@ export class MainController {
             layerParams: {
               showOnSelector: false
             }
-          }, */
+          }, 
           rdtrprov: {
             name: 'RDTR Kota Yogyakarta',
             type: 'wms',
@@ -140,19 +127,20 @@ export class MainController {
       }
     }; //map
 
-
+    /*
     $scope.$on("leafletDirectiveGeoJson.mouseover", function (ev, args) {
       //console.log(args.model.properties.Sub_Zona);
       $scope.mouseOver = args.model.properties;
       //console.log($scope.mouseOver);
     });
+    */
 
     $scope.$on('leafletDirectiveMap.click', function (ev, args) {
       //console.log(args.leafletEvent.latlng); 
       var lEvent = args.leafletEvent.latlng;
       var popup = L.popup({ offset: L.point(0, -0.3) })
         .setLatLng(lEvent)  //[lEvent.lat, lEvent.lng])
-        .setContent("here")
+        .setContent("penggunaan ruang")
       leafletData.getMap().then(function (map) {
         popup.openOn(map);
       });
