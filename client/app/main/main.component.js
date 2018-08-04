@@ -24,47 +24,44 @@ export class MainController {
     };
 
 
-
+    /*
     $scope.getData = function () {
       $http.get('/assets/data/rdtr.geojson')
         .then(response => {
-          console.log(response.data);
+          //console.log(response.data);
           $scope.geojson = response.data;
-    });
-  }
-    //$scope.geojson = response;
+          // });
+          //}
+          //$scope.geojson = response;
 
+          angular.extend($scope.map.layers.overlays, {
+            geojson: {
+              data: response.data,
+              name: 'RDTR JSON',
+              type: 'geoJSONShape',
+              enable: true,
+              //visible: true,
+              //resetStyleOnMouseout: true,
+              layerOptions: {
+                style: {
+                  //fillColor: "green",
+                  //weight: 0,
+                  'opacity': 0
+                  //color: 'white',
+                  //dashArray: '0',
+                  //fillOpacity: 0
+                }
+              },
+              layerParams: {
+                showOnSelector: true
+              }
+            }
+          });
 
-    /*
-    angular.extend($scope.map.layers.overlays, {
-      geojson: {
-        data: response.data,
-        name: 'RDTR JSON',
-        type: 'geoJSONShape',
-        //enable: true,
-        visible: true, 
-        //resetStyleOnMouseout: true,
-        layerOptions: {
-          style: {
-            //fillColor: "green",
-            //weight: 0,
-            'opacity': 0
-            //color: 'white',
-            //dashArray: '0',
-            //fillOpacity: 0
-          }
-        },
-        layerParams: {
-          showOnSelector: true
-        }
-      } 
-    });
-  
-  });
-  
-}; //getdata
- 
-*/
+        });
+
+    }; //getdata
+    */
 
     $scope.map = {
       layers: {
@@ -109,7 +106,7 @@ export class MainController {
             layerParams: {
               showOnSelector: false
             }
-          }, 
+          },
           rdtrprov: {
             name: 'RDTR Kota Yogyakarta',
             type: 'wms',
@@ -127,20 +124,20 @@ export class MainController {
       }
     }; //map
 
-    /*
+    
     $scope.$on("leafletDirectiveGeoJson.mouseover", function (ev, args) {
       //console.log(args.model.properties.Sub_Zona);
       $scope.mouseOver = args.model.properties;
       //console.log($scope.mouseOver);
     });
-    */
+    
 
     $scope.$on('leafletDirectiveMap.click', function (ev, args) {
       //console.log(args.leafletEvent.latlng); 
       var lEvent = args.leafletEvent.latlng;
       var popup = L.popup({ offset: L.point(0, -0.3) })
         .setLatLng(lEvent)  //[lEvent.lat, lEvent.lng])
-        .setContent("penggunaan ruang")
+        .setContent("penggunaan ruang:")
       leafletData.getMap().then(function (map) {
         popup.openOn(map);
       });
@@ -148,15 +145,12 @@ export class MainController {
     });
 
 
-
-
-
   } //constructor
 
 
 
   $onInit() {
-    this.$scope.getData();
+   // this.$scope.getData();
     this.$http.get('/api/things')
       .then(response => {
         this.awesomeThings = response.data;
