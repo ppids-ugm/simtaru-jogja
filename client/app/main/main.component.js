@@ -18,9 +18,9 @@ export class MainController {
     $scope.mouseOver = {};
     $scope.geojson = {};
     $scope.center = {
-      lat: -7.7830961,
-      lng: 110.3666712,
-      zoom: 17
+      lat: -7.8049497,
+      lng: 110.3738942,
+      zoom: 15
     };
 
 

@@ -1,3 +1,14 @@
+
+.no-padding {
+    padding: 0 !important;
+  }
+  
+  .map-wrapper{
+    height: calc(100vh - 50px);
+  }
+
+  
+
 .angular-leaflet-control-layers {
     position: absolute;
     background: white;
