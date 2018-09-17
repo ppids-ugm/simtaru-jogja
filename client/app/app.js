@@ -10,7 +10,6 @@ import 'angular-socket-io';
 
 import uiRouter from 'angular-ui-router';
 
-//import uiBootstrap from 'angular-ui-bootstrap';
 import 'angular-validation-match';
 
 import {
@@ -35,10 +34,10 @@ import './app.scss';
 
 angular.module('starlingApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter,
   _Auth, account, admin, 'validation.match', navbar, footer, main, constants, AdminlteComponent,
-  socket, util, 'nemLogging', 'ui-leaflet', dataFactory, PersilComponent, 'openlayers-directive'
+  socket, util, 'nemLogging', 'ui-leaflet', dataFactory, PersilComponent
 ])
   .config(routeConfig)
-  .run(function ($rootScope, $location, Auth) {
+  .run(function($rootScope, $location, Auth) {
     'ngInject';
     // Redirect to login if route requires auth and you're not logged in
 
@@ -49,10 +48,10 @@ angular.module('starlingApp', [ngCookies, ngResource, ngSanitize, 'btford.socket
     });
 
 
-    $rootScope.$on('$stateChangeStart', function (event, next) {
-      Auth.isLoggedIn(function (loggedIn) {
+    $rootScope.$on('$stateChangeStart', function(event, next) {
+      Auth.isLoggedIn(function(loggedIn) {
         $rootScope.authIsLoggedIn = loggedIn;
-        if (next.authenticate && !loggedIn) {
+        if(next.authenticate && !loggedIn) {
           $location.path('/login');
         }
       });

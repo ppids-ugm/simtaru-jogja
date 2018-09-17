@@ -58,9 +58,9 @@ module.exports = function makeWebpackConfig(options) {
                 'lodash',
                 'leaflet',
                 'angular-simple-logger',
-                'ui-leaflet',
-                'ol',
-                'angular-openlayers-directive'
+                'ui-leaflet'
+                
+                
                 
                 
                 
