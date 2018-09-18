@@ -1,11 +1,27 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <script src="../assets/L.TileLayer.BetterWMS.js"></script>
   <!-- Content Header (Page header) -->
   <div class="map-wrapper">
-    <leaflet height="100%" width="100%" layers="map.layers"  lf-center="center"></leaflet>
-    
+    <leaflet height="100%" width="100%" layers="map.layers"  lf-center="center"></leaflet>    
   </div>
+  <div class="row">
+      <section class="col-lg-4 connectedSortable ui-sortable">
+          <div class="box-body border-radius-none">
+            <p><strong>Zona: </strong>{{mouseOver.zona}}</p>
+          </div>
+      </section>
+      <section class="col-lg-4 connectedSortable ui-sortable">
+          <div class="box-body border-radius-none">
+            <p><strong>Sub-Zona: </strong>{{mouseOver.sub_zona}}</p>
+          </div>
+      </section>
+      <section class="col-lg-4 connectedSortable ui-sortable">
+          <div class="box-body border-radius-none">
+            <p><strong>Pola Ruang: </strong>{{mouseOver.pola_ruang}}</p>
+          </div>
+      </section>
+    </div>
+    <div class="row">
 
   <!-- Main content -->
   <!--section class="content container-fluid">

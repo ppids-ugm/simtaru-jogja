@@ -12,19 +12,22 @@ export class MainController {
     this.$sce = $sce;
     this.socket = socket;
     this.$scope = $scope;
+    this.auth = Auth;
     //this.rootScope = $rootScope;
     this.leafletData = leafletData;
 
     //$scope.fromFactory = dataFactory;
-    this.auth = Auth;
     $scope.mouseOver = {};
     $scope.geojson = {};
+    $scope.focusFeature = {};
     $scope.center = {
       lat: -7.8049497,
       lng: 110.3738942,
       zoom: 15
     };
 
+    
+    // callback function from Geoserver JSONP
     window.parseResponse = function (data) {
       //$scope.geojson = data;
 
@@ -46,6 +49,7 @@ export class MainController {
             layer.bindPopup('<strong>' + feature.properties.zona + '</strong><p>sub-zona: ' + feature.properties.sub_zona + '</p>');
 
             layer.on('mouseover', function () {
+              $scope.mouseOver = feature.properties;
               //console.log(feature.properties);
             });
             layer.on('mouseout', function () {
@@ -54,43 +58,25 @@ export class MainController {
               //});
             });
             layer.on('click', function () {
-              // Let's say you've got a property called url in your geojsonfeature:
-              //console.log(feature.properties);
+              $scope.focusFeature = feature.properties;            
+              //console.log($scope.focusFeature);
             });
           }
           
         });
 
         rdtrGeoJSON.addData(data);
-        //console.log(rdtrGeoJSON);
         rdtrGeoJSON.addTo(map);
       });
     }
 
-    /*
-          angular.extend($scope.map.layers.overlays, {
-            rdtr2: {
-              data: data,
-              name: 'RDTR JSON',
-              type: 'geoJSONShape',
-              enable: true,
-              visible: true,
-              resetStyleOnMouseout: true,
-              layerOptions: {
-                
-              },
-              layerParams: {
-                showOnSelector: true
-              }
-            }
-          });
-          */
-
-
-
+    // Angular load Geoserver GeoJSON via JSONP (setup Geoserver JSONP first)      
     $scope.getData = function () {
+
+      // Geoserver endpoint. Change accordingly
       var url_geojson = 'http://localhost:8089/geoserver/simtaru/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=simtaru:rdtr_kota&outputFormat=text%2Fjavascript&srsName:EPSG:4326';
 
+      // JSONP must use $sce for trusted url
       $http.jsonp($sce.trustAsResourceUrl(url_geojson))
         .then(function (response) {})
         .catch(function (error) {
@@ -98,6 +84,7 @@ export class MainController {
         });
     }; //getdata
 
+    // defining Leaflet map object
     $scope.map = {
       layers: {
         baselayers: {
@@ -143,13 +130,38 @@ export class MainController {
       }
     }; //map
 
+
+  } //constructor
+
+
+  $onInit() {
+    this.$scope.getData(); // initializing view by getting data
+  }
+
+} //controller
+
+
+export default angular.module('starlingApp.main', [uiRouter])
+  .config(routing)
+  .component('main', {
+    template: require('./main.html'),
+    controller: MainController
+  })
+  .name;
+
+
+
+  
+    /*
+    // for the sake of documentation: angular ways for geojson mouse event
+
     $scope.$on('leafletDirectiveGeoJson.mouseOver', function (ev, args) {
       //console.log(args.model.properties.Sub_Zona);
       $scope.mouseOver = args;
       console.log($scope.mouseOver);
     });
 
-    /*
+    
     $scope.$on('leafletDirectiveMap.mouseover', function (ev, args) {
       console.log(args.leafletEvent);
       var lEvent = args.leafletEvent.latlng;
@@ -164,13 +176,8 @@ export class MainController {
     });
 
     */
-  } //constructor
 
-
-  $onInit() {
-    this.$scope.getData();
-
-    /*
+     /*
     this.leafletData.getMap().then(function (map) {
       var url = 'http://gis.jogjaprov.go.id:8080/geoserver/geonode/wms/';
       L.tileLayer.wms(url, {
@@ -191,15 +198,3 @@ export class MainController {
       });
 
       */
-  }
-
-} //controller
-
-
-export default angular.module('starlingApp.main', [uiRouter])
-  .config(routing)
-  .component('main', {
-    template: require('./main.html'),
-    controller: MainController
-  })
-  .name;
