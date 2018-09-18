@@ -26,21 +26,77 @@ export class MainController {
     };
 
     window.parseResponse = function (data) {
-      $scope.geojson = data;
+      //$scope.geojson = data;
+
+      var rdtrStyle = {
+        fillColor: 'green',
+        weight: 0,
+        //opacity: 10,
+        color: 'white',
+        dashArray: '0'
+        //fillOpacity: 0
+      };
+
+      // console.log('data', data);
+
+      leafletData.getMap().then(function (map) {
+        var rdtrGeoJSON = new L.GeoJSON(null, {
+          style: rdtrStyle,
+          onEachFeature: function (feature, layer) {
+            layer.bindPopup('<strong>' + feature.properties.zona + '</strong><p>sub-zona: ' + feature.properties.sub_zona + '</p>');
+
+            layer.on('mouseover', function () {
+              //console.log(feature.properties);
+            });
+            layer.on('mouseout', function () {
+              //this.setStyle({
+              //  'fillColor': '#ff0000'
+              //});
+            });
+            layer.on('click', function () {
+              // Let's say you've got a property called url in your geojsonfeature:
+              //console.log(feature.properties);
+            });
+          }
+          
+        });
+
+        rdtrGeoJSON.addData(data);
+        //console.log(rdtrGeoJSON);
+        rdtrGeoJSON.addTo(map);
+      });
     }
+
+    /*
+          angular.extend($scope.map.layers.overlays, {
+            rdtr2: {
+              data: data,
+              name: 'RDTR JSON',
+              type: 'geoJSONShape',
+              enable: true,
+              visible: true,
+              resetStyleOnMouseout: true,
+              layerOptions: {
+                
+              },
+              layerParams: {
+                showOnSelector: true
+              }
+            }
+          });
+          */
+
 
 
     $scope.getData = function () {
       var url_geojson = 'http://localhost:8089/geoserver/simtaru/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=simtaru:rdtr_kota&outputFormat=text%2Fjavascript&srsName:EPSG:4326';
 
       $http.jsonp($sce.trustAsResourceUrl(url_geojson))
-        .then(
-          function (response) {})
-        .catch(
-          function (error) {
+        .then(function (response) {})
+        .catch(function (error) {
 
-          });
-    };
+        });
+    }; //getdata
 
     $scope.map = {
       layers: {
@@ -68,10 +124,11 @@ export class MainController {
           }
         },
         overlays: {
+          /*
           rdtrprov: {
             name: 'RDTR Kota Yogyakarta',
             type: 'wms',
-            visible: true,
+            visible: false,
             url: 'http://gis.jogjaprov.go.id:8080/geoserver/geonode/wms/',
             layerOptions: {
               layers: 'geonode:pola_ruang_rdtr_kota_jogja',
@@ -81,61 +138,50 @@ export class MainController {
               crs: L.CRS.EPSG4326
             }
           }
+          */
         }
       }
     }; //map
 
-    angular.extend($scope.map.layers.overlays, {
-      geojson: {
-        data: $scope.geojson,
-        name: 'RDTR JSON',
-        type: 'geoJSONShape',
-        //enable: true,
-        visible: true,
-        //resetStyleOnMouseout: true,
-        layerOptions: {
-          style: {
-            //fillColor: "green",
-            //weight: 0,
-            'opacity': 0
-            //color: 'white',
-            //dashArray: '0',
-            //fillOpacity: 0
-          }
-        },
-        layerParams: {
-          showOnSelector: true
-        }
-      }
-    });
-
-
-    $scope.$on("leafletDirectiveGeoJson.mouseover", function (ev, args) {
+    $scope.$on('leafletDirectiveGeoJson.mouseOver', function (ev, args) {
       //console.log(args.model.properties.Sub_Zona);
-      $scope.mouseOver = args.model.properties;
+      $scope.mouseOver = args;
       console.log($scope.mouseOver);
     });
 
-
-    $scope.$on('leafletDirectiveMap.click', function (ev, args) {
-      //console.log(args.leafletEvent.latlng);
+    /*
+    $scope.$on('leafletDirectiveMap.mouseover', function (ev, args) {
+      console.log(args.leafletEvent);
       var lEvent = args.leafletEvent.latlng;
       var popup = L.popup({
           offset: L.point(0, -0.3)
         })
         .setLatLng(lEvent) //[lEvent.lat, lEvent.lng])
         .setContent('penggunaan ruang');
-      leafletData.getMap().then(function(map) {
+      leafletData.getMap().then(function (map) {
         popup.openOn(map);
       });
     });
+
+    */
   } //constructor
 
 
   $onInit() {
     this.$scope.getData();
 
+    /*
+    this.leafletData.getMap().then(function (map) {
+      var url = 'http://gis.jogjaprov.go.id:8080/geoserver/geonode/wms/';
+      L.tileLayer.wms(url, {
+        layers: 'geonode:pola_ruang_rdtr_kota_jogja',
+        transparent: true,
+        name: 'RDTR dua',
+        format: 'image/png'
+      }).addTo(map);
+    });
 
+    */
 
     /*
     this.$http.get('/api/things')
