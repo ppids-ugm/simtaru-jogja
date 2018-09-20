@@ -53,21 +53,22 @@
               </div>
               <div id="detil" class="collapse">
                 <div class="well">
-                  <div class="form-group">
+                  <div ng-class="{'has-error': intensitas.error}" class="form-group">
                     <label><small>Luas Tanah (m2)</small></label>
-                    <input type="text" class="form-control" ng-model="cekIntensitas.luasTanah" placeholder="Luas Tanah">
+                    <input type="number" min="40" class="form-control" ng-model="cekIntensitas.luasTanah" placeholder="Luas Tanah">
+                    <small id="help" ng-show="intensitas.error" class="form-text text-warning text-muted">Luas tanah minimal 40 meter persegi.</small>
                   </div>
                   <div class="form-group">
                     <label><small>Luas Bangunan (m2)</small></label>
-                    <input type="text" class="form-control" ng-model="cekIntensitas.luasBangunan" placeholder="Luas Bangunan">
+                    <input type="number" class="form-control" ng-model="cekIntensitas.luasBangunan" placeholder="Luas Bangunan">
                   </div>
                   <div class="form-group">
                     <label><small>Total Tinggi Bangunan (m)</small></label>
-                    <input type="text" class="form-control" ng-model="cekIntensitas.tinggiBangunan" placeholder="Tinggi Bangunan">
+                    <input type="number" class="form-control" ng-model="cekIntensitas.tinggiBangunan" placeholder="Tinggi Bangunan">
                   </div>
                   <div class="form-group">
                     <label><small>Jumlah Lantai</small></label>
-                    <input type="text" class="form-control" ng-model="cekIntensitas.jumlahLantai" placeholder="Jumlah Lantai">
+                    <input type="number" class="form-control" ng-model="cekIntensitas.jumlahLantai" placeholder="Jumlah Lantai">
                   </div>
                 </div>
               </div>

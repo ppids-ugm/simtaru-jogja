@@ -28,14 +28,15 @@ export class MainController {
       showDetail: false
     };
     $scope.cekIntensitas = {
-      luasTanah: 0,
-      luasBangunan: 0,
-      tinggiBangunan: 0,
-      jumlahLantai: 0
+      luasTanah: '',
+      luasBangunan: '',
+      tinggiBangunan: '',
+      jumlahLantai: ''
     };
     $scope.intensitas = {
+      error: false,
       kelas: '',
-      keterangan:'',
+      keterangan: '',
       KDB: '',
       Tinggi: '',
       KLB: '',
@@ -119,6 +120,28 @@ export class MainController {
         //fillOpacity: 0
       };
 
+      function zonaStyle(feature) {
+        var colorToUse;
+        var zona = feature.properties.zona;
+
+        if (zona === "Cagar Budaya") colorToUse = "#595EEA";
+        else if (zona === "Industri") colorToUse = "#8D26D7";
+        else if (zona === "Perdagangan dan Jasa") colorToUse = "#FFE417";
+        else if (zona === "Perkantoran") colorToUse = "#EF2F43";
+        else if (zona === "Perumahan") colorToUse = "#EF9B13";
+        else if (zona === "Peruntukan Lainnya") colorToUse = "#94D6A4";
+        else if (zona === "Ruang Terbuka Hijau") colorToUse = "#14DB1E";
+        else if (zona === "Sarana Pelayanan Umum") colorToUse = "#EC19D4";
+        else if (zona === "Sempadan Sungai") colorToUse = "#88C9E6";
+        else colorToUse = "green";
+
+        return {
+          "color": colorToUse,
+          "weight": 0.5
+        };
+      }
+
+
 
       // accessing Leaflet directly
       leafletData.getMap().then(function (map) {
@@ -136,7 +159,7 @@ export class MainController {
 
 
         var rdtrGeoJSON = new L.GeoJSON(null, {
-          style: rdtrStyle,
+          style: zonaStyle,
           onEachFeature: function (feature, layer) {
             layer.bindPopup('<strong>' + feature.properties.zona +
               '</strong><p>Sub-zona: ' +
@@ -156,7 +179,7 @@ export class MainController {
             });
             layer.on('click', function () {
               $scope.focusFeature = feature.properties;
-              //console.log($scope.focusFeature.kode);
+              console.log($scope.focusFeature.kode);
 
             });
           }
@@ -165,9 +188,7 @@ export class MainController {
 
         rdtrGeoJSON.addData(data).addTo(map);
 
-
-
-      });
+      }); //parse response
     }
 
     //## Angular load Geoserver GeoJSON via JSONP (setup Geoserver JSONP first)
@@ -204,7 +225,16 @@ export class MainController {
               attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
               continuousWorld: true
             }
+          },
+          esri: {
+            name: 'ESRI Imagery',
+            type: 'xyz',
+            url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+            layerOptions: {
+              attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+            }
           }
+
         },
         overlays: {
           /*
@@ -288,17 +318,22 @@ export class MainController {
 
       //# pengkelasan sesuai /api/intensitasruangs
       if (pemanfaatan.luasTanah < 40) {
-        console.log('err');
+        $scope.intensitas.error = true;
       } else if (pemanfaatan.luasTanah <= 100) {
         $scope.intensitas.kelas = "1";
+        $scope.intensitas.error = false;
       } else if (pemanfaatan.luasTanah <= 200) {
         $scope.intensitas.kelas = "2";
+        $scope.intensitas.error = false;
       } else if (pemanfaatan.luasTanah <= 400) {
         $scope.intensitas.kelas = "3";
+        $scope.intensitas.error = false;
       } else if (pemanfaatan.luasTanah <= 1000) {
         $scope.intensitas.kelas = "4";
+        $scope.intensitas.error = false;
       } else if (pemanfaatan.luasTanah >= 1001) {
         $scope.intensitas.kelas = "5";
+        $scope.intensitas.error = false;
       };
 
       var params = {
