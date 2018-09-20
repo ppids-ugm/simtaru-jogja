@@ -59,7 +59,10 @@ module.exports = function makeWebpackConfig(options) {
         'leaflet',
         'leaflet-control-custom',
         'angular-simple-logger',
-        'ui-leaflet'
+        'ui-leaflet',
+        'leaflet-measure'
+        //'ui-leaflet-layers'
+        
         //'ng-popup'
         
       ]

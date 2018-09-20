@@ -16,6 +16,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/intensitasruang/intensitasruang.socket').register(socket);
   require('../api/skrk/skrk.socket').register(socket);
   require('../api/rdtrdata/rdtrdata.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);

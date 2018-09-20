@@ -4,12 +4,12 @@
   <div class="map-wrapper">
     <leaflet height="100%" width="100%" layers="map.layers" lf-center="center"></leaflet>
     <div class="row">
-      <section class="col-lg-4 connectedSortable ui-sortable">
+      <section class="col-lg-3 connectedSortable ui-sortable">
         <div class="box-body border-radius-none">
           <p><strong>Zona: </strong>{{mouseOver.zona}}</p>
         </div>
       </section>
-      <section class="col-lg-4 connectedSortable ui-sortable">
+      <section class="col-lg-5 connectedSortable ui-sortable">
         <div class="box-body border-radius-none">
           <p><strong>Sub-Zona: </strong>{{mouseOver.sub_zona}}</p>
         </div>
@@ -24,7 +24,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade in" id="myModal" tabindex="-1" role="dialog" data-backdrop="false" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
 
     <div class="modal-content">
@@ -46,19 +46,55 @@
                 <label>Sub-Zona</label>
                 <input type="text" disabled class="form-control" ng-model="focusFeature.sub_zona" placeholder="Sub-zona">
               </div>
+              <div class="form-group">
+                <button ng-show="statusPerijinan.showDetail" class="btn btn-info btn-small pull-right" data-toggle="collapse"
+                  data-target="#detil" aria-expanded="false">
+                  Tampilkan detil </button>
+              </div>
+              <div id="detil" class="collapse">
+                <div class="well">
+                  <div class="form-group">
+                    <label><small>Luas Tanah (m2)</small></label>
+                    <input type="text" class="form-control" ng-model="cekIntensitas.luasTanah" placeholder="Luas Tanah">
+                  </div>
+                  <div class="form-group">
+                    <label><small>Luas Bangunan (m2)</small></label>
+                    <input type="text" class="form-control" ng-model="cekIntensitas.luasBangunan" placeholder="Luas Bangunan">
+                  </div>
+                  <div class="form-group">
+                    <label><small>Total Tinggi Bangunan (m)</small></label>
+                    <input type="text" class="form-control" ng-model="cekIntensitas.tinggiBangunan" placeholder="Tinggi Bangunan">
+                  </div>
+                  <div class="form-group">
+                    <label><small>Jumlah Lantai</small></label>
+                    <input type="text" class="form-control" ng-model="cekIntensitas.jumlahLantai" placeholder="Jumlah Lantai">
+                  </div>
+                </div>
+              </div>
+
           </section>
           <section class="col-lg-6 connectedSortable ui-sortable">
-            <p>Status Perizinan:</p>
+            <h3>Status Perizinan</h3>
             <blockquote style="text-align:center">
-              <h1 ng-class="statusPerijinanClass"><strong>{{statusPerijinan}}</strong></h1>
+              <h1 ng-class="statusPerijinan.style"><strong>{{statusPerijinan.text}}</strong></h1>
             </blockquote>
+            <p> {{intensitas.keterangan}}</p>
+            <br>
+            <i>Kesesuaian KDB:</i>
+            <h4>{{intensitas.KDB}}</h4>
+            <i>Kesesuaian Tinggi Bangunan:</i>
+            <h4>{{intensitas.Tinggi}}</h4>
+            <i>Kesesuaian KLB:</i>
+            <h4>{{intensitas.KLB}}</h4>
+            <i>Syarat KDH:</i>
+            <h4>{{intensitas.KDH}}</h4>
           </section>
         </div>
       </div>
 
       <!-- /.box-body -->
-      <div class="modal-footer">
-        <button type="submit" ng-click='getFeature(focusFeature.kode, kegiatanTerpilih)' class="btn btn-info pull-right">Periksa
+      <div ng-hide="false" class="modal-footer">
+        <button type="submit" ng-click='cekPemanfaatan(cekIntensitas, focusFeature.kode)' class="btn btn-info pull-right">Periksa
           Perizinan</button>
       </div>
       </form>

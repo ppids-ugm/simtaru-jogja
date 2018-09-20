@@ -9,6 +9,7 @@ import path from 'path';
 
 export default function(app) {
   // Insert routes below
+  app.use('/api/intensitasruangs', require('./api/intensitasruang'));
   app.use('/api/skrks', require('./api/skrk'));
   app.use('/api/rdtrdatas', require('./api/rdtrdata'));
   app.use('/api/things', require('./api/thing'));

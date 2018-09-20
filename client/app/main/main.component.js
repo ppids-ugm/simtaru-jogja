@@ -22,8 +22,31 @@ export class MainController {
     $scope.focusFeature = {};
     $scope.rincianKegiatan = [];
     $scope.kegiatanTerpilih = '';
-    $scope.statusPerijinan = '';
-    $scope.statusPerijinanClass = '';
+    $scope.statusPerijinan = {
+      text: '',
+      style: '',
+      showDetail: false
+    };
+    $scope.cekIntensitas = {
+      luasTanah: 0,
+      luasBangunan: 0,
+      tinggiBangunan: 0,
+      jumlahLantai: 0
+    };
+    $scope.intensitas = {
+      kelas: '',
+      keterangan:'',
+      KDB: '',
+      Tinggi: '',
+      KLB: '',
+      KDH: ''
+    };
+
+
+
+
+
+    //$scope.statusPerijinanClass = '';
     $scope.center = {
       lat: -7.8049497,
       lng: 110.3738942,
@@ -32,6 +55,9 @@ export class MainController {
 
 
     leafletData.getMap().then(function (map) {
+
+      //## custom control
+
       L.control.custom({
           position: 'topright',
           content: '<button type="button" class="btn btn-default">' +
@@ -96,6 +122,19 @@ export class MainController {
 
       // accessing Leaflet directly
       leafletData.getMap().then(function (map) {
+        var measureControl = L.control.measure({
+          position: 'bottomright',
+          primaryLengthUnit: 'meters',
+          secondaryLengthUnit: 'kilometers',
+          primaryAreaUnit: 'hectares',
+          activeColor: '#FF5A00',
+          completedColor: '##EAFF00'
+        });
+        measureControl.addTo(map);
+
+
+
+
         var rdtrGeoJSON = new L.GeoJSON(null, {
           style: rdtrStyle,
           onEachFeature: function (feature, layer) {
@@ -117,15 +156,17 @@ export class MainController {
             });
             layer.on('click', function () {
               $scope.focusFeature = feature.properties;
-              console.log($scope.focusFeature.kode);
+              //console.log($scope.focusFeature.kode);
 
             });
           }
 
         });
 
-        rdtrGeoJSON.addData(data);
-        rdtrGeoJSON.addTo(map);
+        rdtrGeoJSON.addData(data).addTo(map);
+
+
+
       });
     }
 
@@ -188,7 +229,7 @@ export class MainController {
 
     //## Get feature from SKRK MongoDB
     $scope.getFeature = function (kode, kegiatan) {
-      console.log('isi skrk ', kode, kegiatan);
+      //console.log('isi skrk ', kode, kegiatan);
       var params = {
         skrk: kode,
         kegiatan: kegiatan
@@ -199,36 +240,38 @@ export class MainController {
         params: params
       }).then(function (success) {
         //$scope.statusPerijinan = success.data[0].skrk[kode];
-        console.log('status perizinan', $scope.statusPerijinan);
+        //console.log('status perizinan', $scope.statusPerijinan);
         switch (success.data[0].skrk[kode]) {
           case 'I':
-            $scope.statusPerijinan = 'Pemanfaatan Diizinkan';
-            $scope.statusPerijinanClass = 'text-green';
+            $scope.statusPerijinan.text = 'Pemanfaatan Diizinkan';
+            $scope.statusPerijinan.style = 'text-green';
+            $scope.statusPerijinan.showDetail = true;
             break;
           case 'B':
-            $scope.statusPerijinan = 'Pemanfaatan Memerlukan Izin Penggunaan Bersyarat';
-            $scope.statusPerijinanClass = 'text-aqua';
+            $scope.statusPerijinan.text = 'Pemanfaatan Memerlukan Izin Penggunaan Bersyarat';
+            $scope.statusPerijinan.style = 'text-aqua';
+            $scope.statusPerijinan.showDetail = true;
             break;
           case 'X':
-            $scope.statusPerijinan = 'Pemanfaatan Tidak Diizinkan';
-            $scope.statusPerijinanClass = 'text-red';
+            $scope.statusPerijinan.text = 'Pemanfaatan Tidak Diizinkan';
+            $scope.statusPerijinan.style = 'text-red';
+            $scope.statusPerijinan.showDetail = false;
             break;
           case 'T':
-            $scope.statusPerijinan = 'Pemanfaatan Diizinkan Secara Terbatas';
-            $scope.statusPerijinanClass = 'text-yellow';
+            $scope.statusPerijinan.text = 'Pemanfaatan Diizinkan Secara Terbatas';
+            $scope.statusPerijinan.style = 'text-yellow';
+            $scope.statusPerijinan.showDetail = true;
             break;
           default:
-            $scope.statusPerijinan = '';
+            $scope.statusPerijinan.text = '';
+            $scope.statusPerijinan.style = 'text-gray';
         }
-
-
-
-
       }, function (error) {
         console.log('error', error.data);
       });
     } //getFeature from SKRK
 
+    //get list of kegiatan di db
     $scope.getKegiatan = function () {
       $http.get('http://localhost:3000/api/skrks/distinct').then(function (success) {
         //console.log('success', success.data);
@@ -238,7 +281,84 @@ export class MainController {
       }, function (error) {
         console.log('error', error);
       });
-    } //getFeature from SKRK
+    }; //getFeature list kegiatan SKRK
+
+    $scope.cekPemanfaatan = function (pemanfaatan, kodeSKRK) {
+      console.log('pemanfaatan', pemanfaatan);
+
+      //# pengkelasan sesuai /api/intensitasruangs
+      if (pemanfaatan.luasTanah < 40) {
+        console.log('err');
+      } else if (pemanfaatan.luasTanah <= 100) {
+        $scope.intensitas.kelas = "1";
+      } else if (pemanfaatan.luasTanah <= 200) {
+        $scope.intensitas.kelas = "2";
+      } else if (pemanfaatan.luasTanah <= 400) {
+        $scope.intensitas.kelas = "3";
+      } else if (pemanfaatan.luasTanah <= 1000) {
+        $scope.intensitas.kelas = "4";
+      } else if (pemanfaatan.luasTanah >= 1001) {
+        $scope.intensitas.kelas = "5";
+      };
+
+      var params = {
+        kelas: $scope.intensitas.kelas,
+        skrk: kodeSKRK
+      };
+      $http({
+        method: 'GET',
+        url: 'http://localhost:3000/api/intensitasruangs/query',
+        params: params
+      }).then(function (success) {
+        console.log('hasil skrk', success.data);
+
+        $scope.intensitas.keterangan = success.data[0].Keterangan;
+
+        // periksa KDB
+        var KDB = (pemanfaatan.luasTanah * success.data[0].KDB[kodeSKRK]) / 100;
+        if (pemanfaatan.luasBangunan > KDB) {
+          $scope.intensitas.KDB = 'Melebihi Batas KDB (' + success.data[0].KDB[kodeSKRK] + '%)';
+        } else if (pemanfaatan.luasBangunan <= KDB) {
+          $scope.intensitas.KDB = 'Sesuai Syarat KDB';
+        } else {
+          $scope.intensitas.KDB = 'Luas bangunan salah. Periksa masukan';
+        };
+
+        // periksa Tinggi
+        var Tinggi = (success.data[0].Tinggi[kodeSKRK]);
+        if (pemanfaatan.tinggiBangunan > Tinggi) {
+          $scope.intensitas.Tinggi = 'Melebihi Batas Tinggi Bangunan (' + success.data[0].Tinggi[kodeSKRK] + ' m)';
+        } else if (pemanfaatan.tinggiBangunan <= Tinggi) {
+          $scope.intensitas.Tinggi = 'Sesuai Syarat Batas Tinggi Bangunan (' + success.data[0].Tinggi[kodeSKRK] + ' m)';
+        } else {
+          $scope.intensitas.Tinggi = 'Tinggi bangunan salah. Periksa masukan';
+        };
+
+        // periksa KLB
+        var KLB = (success.data[0].KLB[kodeSKRK]);
+        var hitungKLB = (pemanfaatan.jumlahLantai * pemanfaatan.luasBangunan) / pemanfaatan.luasTanah;
+        if (hitungKLB > KLB) {
+          $scope.intensitas.KLB = 'Melebihi Batas KLB (' + success.data[0].KLB[kodeSKRK] + '%)';
+        } else if (hitungKLB <= KLB) {
+          $scope.intensitas.KLB = 'Sesuai Syarat KLB (' + success.data[0].KLB[kodeSKRK] + '%)';
+        } else {
+          $scope.intensitas.KLB = 'Hitungan KLB salah. Periksa masukan';
+        };
+
+
+        // Tampilkan KDH
+        $scope.intensitas.KDH = success.data[0].KDH[kodeSKRK] + '%';
+
+
+      }, function (error) {
+        console.log('error', error.data);
+      });
+
+
+
+
+
+    } //cek izin intensitas pemanfaatan ruang
 
 
   } //constructor
@@ -246,7 +366,6 @@ export class MainController {
 
   $onInit() {
     this.$scope.getData(); // initializing view by getting data
-
     this.$scope.getKegiatan();
 
   }
