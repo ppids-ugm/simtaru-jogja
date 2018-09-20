@@ -30,11 +30,12 @@ import dataFactory from './dataFactory/dataFactory.service';
 import PersilComponent from './persil/persil.component';
 
 
+
 import './app.scss';
 
 angular.module('starlingApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter,
   _Auth, account, admin, 'validation.match', navbar, footer, main, constants, AdminlteComponent,
-  socket, util, 'nemLogging', 'ui-leaflet', dataFactory, PersilComponent
+  socket, util, 'nemLogging', 'ui-leaflet', dataFactory, PersilComponent //\,  ngPopup
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

@@ -2,29 +2,84 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <div class="map-wrapper">
-    <leaflet height="100%" width="100%" layers="map.layers"  lf-center="center"></leaflet>    
-  </div>
-  <div class="row">
-      <section class="col-lg-4 connectedSortable ui-sortable">
-          <div class="box-body border-radius-none">
-            <p><strong>Zona: </strong>{{mouseOver.zona}}</p>
-          </div>
-      </section>
-      <section class="col-lg-4 connectedSortable ui-sortable">
-          <div class="box-body border-radius-none">
-            <p><strong>Sub-Zona: </strong>{{mouseOver.sub_zona}}</p>
-          </div>
-      </section>
-      <section class="col-lg-4 connectedSortable ui-sortable">
-          <div class="box-body border-radius-none">
-            <p><strong>Pola Ruang: </strong>{{mouseOver.pola_ruang}}</p>
-          </div>
-      </section>
-    </div>
+    <leaflet height="100%" width="100%" layers="map.layers" lf-center="center"></leaflet>
     <div class="row">
+      <section class="col-lg-4 connectedSortable ui-sortable">
+        <div class="box-body border-radius-none">
+          <p><strong>Zona: </strong>{{mouseOver.zona}}</p>
+        </div>
+      </section>
+      <section class="col-lg-4 connectedSortable ui-sortable">
+        <div class="box-body border-radius-none">
+          <p><strong>Sub-Zona: </strong>{{mouseOver.sub_zona}}</p>
+        </div>
+      </section>
+      <section class="col-lg-4 connectedSortable ui-sortable">
+        <div class="box-body border-radius-none">
+          <p><strong>Pola Ruang: </strong>{{mouseOver.pola_ruang}}</p>
+        </div>
+      </section>
+    </div> <!-- row -->
+  </div> <!-- map wrapper -->
+</div>
 
-  <!-- Main content -->
-  <!--section class="content container-fluid">
+<!-- Modal -->
+<div class="modal fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
+        <h4 class="modal-title">Periksa Perizinan</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <section class="col-lg-6 connectedSortable ui-sortable">
+            <!-- form start -->
+            <form role="form" _lpchecked="1">
+              <div class="form-group">
+                <label>Pilih Jenis Kegiatan</label>
+                <select type="text" class="form-control select2 select2-hidden-accessible" ng-model="kegiatanTerpilih"
+                  ng-options="x for x in rincianKegiatan" ng-change="getFeature(focusFeature.kode, kegiatanTerpilih)"></select>
+              </div>
+              <div class="form-group">
+                <label>Sub-Zona</label>
+                <input type="text" disabled class="form-control" ng-model="focusFeature.sub_zona" placeholder="Sub-zona">
+              </div>
+          </section>
+          <section class="col-lg-6 connectedSortable ui-sortable">
+            <p>Status Perizinan:</p>
+            <blockquote style="text-align:center">
+              <h1 ng-class="statusPerijinanClass"><strong>{{statusPerijinan}}</strong></h1>
+            </blockquote>
+          </section>
+        </div>
+      </div>
+
+      <!-- /.box-body -->
+      <div class="modal-footer">
+        <button type="submit" ng-click='getFeature(focusFeature.kode, kegiatanTerpilih)' class="btn btn-info pull-right">Periksa
+          Perizinan</button>
+      </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-------------------refactoring, archiving-------------------------->
+
+<!--section class="content container-fluid">
     <div class="row">
       <section class="col-lg-4 connectedSortable ui-sortable">
           <div class="box-body border-radius-none">
@@ -53,8 +108,8 @@
 
 
   </section-->
-  <!-- /.content -->
-</div>
+<!-- /.content -->
+
 <!-- /.content-wrapper -->
 
 <!--layercontrol order="normal" icons="layercontrol.icons" auto-hide-opacity="true" show-groups="true"

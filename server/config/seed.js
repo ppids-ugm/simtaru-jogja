@@ -56,8 +56,8 @@ export default function seedDatabaseIfNeeded() {
           }, {
             provider: 'local',
             role: 'admin',
-            name: 'Admin',
-            email: 'admin@example.com',
+            name: 'Dany Laksono',
+            email: 'admin@simtaru.com',
             password: 'admin'
           })
           .then(() => console.log('finished populating users'))

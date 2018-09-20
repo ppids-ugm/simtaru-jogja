@@ -13,10 +13,14 @@
 import jsonpatch from 'fast-json-patch';
 import Skrk from './skrk.model';
 
+
+
+
+
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
-  return function(entity) {
-    if(entity) {
+  return function (entity) {
+    if (entity) {
       return res.status(statusCode).json(entity);
     }
     return null;
@@ -24,11 +28,11 @@ function respondWithResult(res, statusCode) {
 }
 
 function patchUpdates(patches) {
-  return function(entity) {
+  return function (entity) {
     try {
       // eslint-disable-next-line prefer-reflect
       jsonpatch.apply(entity, patches, /*validate*/ true);
-    } catch(err) {
+    } catch (err) {
       return Promise.reject(err);
     }
 
@@ -37,8 +41,8 @@ function patchUpdates(patches) {
 }
 
 function removeEntity(res) {
-  return function(entity) {
-    if(entity) {
+  return function (entity) {
+    if (entity) {
       return entity.remove()
         .then(() => {
           res.status(204).end();
@@ -48,8 +52,8 @@ function removeEntity(res) {
 }
 
 function handleEntityNotFound(res) {
-  return function(entity) {
-    if(!entity) {
+  return function (entity) {
+    if (!entity) {
       res.status(404).end();
       return null;
     }
@@ -59,7 +63,7 @@ function handleEntityNotFound(res) {
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
-  return function(err) {
+  return function (err) {
     res.status(statusCode).send(err);
   };
 }
@@ -67,6 +71,25 @@ function handleError(res, statusCode) {
 // Gets a list of Skrks
 export function index(req, res) {
   return Skrk.find().exec()
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
+
+//find SKRK by MongoDB Query
+export function findQuery(req, res) {
+  var queryString = "{Kegiatan:'"+ req.query.kegiatan + "'}";
+  console.log('sampai sini', queryString);
+  return Skrk.find({Kegiatan:req.query.kegiatan}).select('skrk.'+req.query.skrk).exec()
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
+//find SKRK by MongoDB Query
+export function findDistinct(req, res) {
+  //console.log('sampai sini', req.query);
+  //var queryString = "{skrk."+ req.query + " ";
+  return Skrk.find().distinct('Kegiatan').exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
@@ -88,10 +111,17 @@ export function create(req, res) {
 
 // Upserts the given Skrk in the DB at the specified ID
 export function upsert(req, res) {
-  if(req.body._id) {
+  if (req.body._id) {
     Reflect.deleteProperty(req.body, '_id');
   }
-  return Skrk.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
+  return Skrk.findOneAndUpdate({
+      _id: req.params.id
+    }, req.body, {
+      new: true,
+      upsert: true,
+      setDefaultsOnInsert: true,
+      runValidators: true
+    }).exec()
 
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -99,7 +129,7 @@ export function upsert(req, res) {
 
 // Updates an existing Skrk in the DB
 export function patch(req, res) {
-  if(req.body._id) {
+  if (req.body._id) {
     Reflect.deleteProperty(req.body, '_id');
   }
   return Skrk.findById(req.params.id).exec()
