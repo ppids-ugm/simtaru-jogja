@@ -46,6 +46,7 @@ module.exports = function makeWebpackConfig(options) {
         'script-loader!bootstrap',
         'angular',
         'admin-lte',
+        'lobipanel-angularjs',
         'angular-animate',
         'angular-aria',
         'angular-cookies',
@@ -62,8 +63,8 @@ module.exports = function makeWebpackConfig(options) {
         'ui-leaflet',
         'leaflet-measure',
         'leaflet-easyprint',
-        'leaflet-control-geocoder',
-        'lobipanel'
+        'leaflet-control-geocoder'
+        
         //'ui-leaflet-layers'
         
         
