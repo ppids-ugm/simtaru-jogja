@@ -62,6 +62,6 @@ angular.module('starlingApp', [ngCookies, ngResource, ngSanitize, 'btford.socket
 angular.element(document)
   .ready(() => {
     angular.bootstrap(document, ['starlingApp'], {
-      strictDi: true
+      strictDi: false //change to true on production//
     });
   });

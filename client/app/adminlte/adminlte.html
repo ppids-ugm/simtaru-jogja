@@ -4,7 +4,7 @@
     <section class="content-header">
         <h1>
             Simtaru
-            <small>Sistem Informasi Pertanahan</small>
+            <small>Sistem Informasi Tanah SG dan PAG</small>
         </h1>
         <ol class="breadcrumb">
             <li>
@@ -22,7 +22,7 @@
                 <!-- small box -->
                 <div class="small-box bg-aqua">
                     <div class="inner">
-                        <h3>15000</h3>
+                        <h3>{{adminlteCtrl.message}}</h3>
 
                         <p>Total Persil</p>
                     </div>
@@ -90,7 +90,7 @@
             <!-- ./col -->
         </div>
         <div class="row">
-            <section class="col-lg-9 connectedSortable ui-sortable">
+            <section class="col-lg-12 connectedSortable ui-sortable">
                 <!-- Map box -->
                 <div class="box box-solid bg-light-blue-gradient">
                     <div class="box-header ui-sortable-handle" style="cursor: move;">
@@ -113,7 +113,7 @@
                         </h3>
                     </div>
                     <div class="box-body">
-                        <leaflet height="50vh" width="100%"  layers="$adminlteCtrl.map.layers" center="$adminlteCtrl.center">
+                        <leaflet height="50vh" width="100%"  layers="adminlteCtrl.map.layers" center="adminlteCtrl.center">
                     </div>
                     <!-- /.box-body-->
                     <div class="box-footer no-border">
@@ -124,8 +124,8 @@
                 </div>
                 <!-- /.box -->
             </section>
-            <section class="col-lg-3 connectedSortable ui-sortable">
-                <!-- solid sales graph -->
+            <!--section class="col-lg-3 connectedSortable ui-sortable">
+                
                 <div class="box box-solid bg-teal-gradient">
                     <div class="box-header ui-sortable-handle" style="cursor: move;">
                         <i class="fa fa-th"></i>
@@ -147,17 +147,17 @@
                             <div class="morris-hover morris-default-style" style="display: none;"></div>
                         </div>
                     </div>
-                    <!-- /.box-body -->
+                    
                     <div class="box-footer no-border">
                             <div class="row">
                                 </div>
 
                     </div>
-                    <!-- /.box-footer -->
+           
                 </div>
-                <!-- /.box -->
+        
 
-            </section>
+            </section-->
         </div>
 
 

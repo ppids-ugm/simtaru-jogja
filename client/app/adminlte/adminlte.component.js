@@ -10,9 +10,9 @@ export class AdminlteComponent {
 
   
 
-  constructor() {
-    this.message = 'Hello';
-    //this.$scope = $scope;
+  constructor($scope) {
+    this.message = '432444';
+    this.$scope = $scope;
     this.center = {
       lat: -7.7830961,
       lng: 110.3666712,
@@ -33,6 +33,14 @@ export class AdminlteComponent {
               attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
               continuousWorld: true
             }
+          },
+          esri: {
+            name: 'ESRI Imagery',
+            type: 'xyz',
+            url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+            layerOptions: {
+              attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+            }
           }
         },
         overlays: {
@@ -44,11 +52,25 @@ export class AdminlteComponent {
             layerOptions: {
               layers: 'geonode:pola_ruang_rdtr_kota_jogja',
               format: 'image/png',
+              opacity: 0.5,
+              version: '1.1.0',
+              crs: L.CRS.EPSG4326
+            }
+          },
+          sgpag: {
+            name: 'SG-PAG',
+            type: 'wms',
+            visible: true,
+            url: 'http://localhost:8089/geoserver/simtaru/wms',
+            layerOptions: {
+              layers: 'simtaru:rdtr_kota',
+              format: 'image/png',
               opacity: 0.75,
               version: '1.1.0',
               crs: L.CRS.EPSG4326
             }
-          }
+          },
+
         }
       }
     }; //map

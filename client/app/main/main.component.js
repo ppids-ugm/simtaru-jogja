@@ -57,8 +57,17 @@ export class MainController {
 
     leafletData.getMap().then(function (map) {
 
+      L.easyPrint({
+        title: 'cetak',
+        position: 'bottomright',
+        sizeModes: ['A4Portrait', 'A4Landscape']
+      }).addTo(map);
+
+      L.Control.geocoder().addTo(map);
+
       //## custom control
 
+      /*
       L.control.custom({
           position: 'topright',
           content: '<button type="button" class="btn btn-default">' +
@@ -82,7 +91,7 @@ export class MainController {
             }
           }
         })
-        .addTo(map);
+        .addTo(map); */
 
 
       //search toolbar. 
@@ -149,7 +158,7 @@ export class MainController {
           position: 'bottomright',
           primaryLengthUnit: 'meters',
           secondaryLengthUnit: 'kilometers',
-          primaryAreaUnit: 'hectares',
+          primaryAreaUnit: 'sqmeters',
           activeColor: '#FF5A00',
           completedColor: '##EAFF00'
         });
