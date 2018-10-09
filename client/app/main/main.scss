@@ -6,6 +6,23 @@
   height: calc(100vh - 100px);
 }
 
+.drag {
+  cursor:move;
+}
+
+.modal{
+  background: none;
+}
+
+
+
+.panel {
+  position: absolute;
+  top: 250px;
+  left: 250px;
+  width: 300px;
+  z-index: 850;
+}
 
 
 .angular-leaflet-control-layers {

@@ -1,7 +1,8 @@
 'use strict';
 
 import angular from 'angular';
-// import ngAnimate from 'angular-animate';
+import ngAnimate from 'angular-animate';
+import ngTouch from 'angular-touch';
 import ngCookies from 'angular-cookies';
 import ngResource from 'angular-resource';
 import ngSanitize from 'angular-sanitize';
@@ -33,7 +34,7 @@ import PersilComponent from './persil/persil.component';
 
 import './app.scss';
 
-angular.module('starlingApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter,
+angular.module('starlingApp', [ngCookies, ngResource, ngSanitize, ngAnimate, ngTouch, 'btford.socket-io', uiRouter,
   _Auth, account, admin, 'validation.match', navbar, footer, main, constants, AdminlteComponent,
   socket, util, 'nemLogging', 'ui-leaflet', dataFactory, PersilComponent//\,  ngPopup
 ])

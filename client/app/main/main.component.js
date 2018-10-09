@@ -3,8 +3,24 @@ import uiRouter from 'angular-ui-router';
 import routing from './main.routes';
 
 export class MainController {
-  awesomeThings = [];
-  newThing = [];
+
+
+  /*
+  ##### TODO #####
+  <skipped> Install leaflet search 
+  <fixed> Move icons to top right
+  <fixed> Fix leaflet control with layer
+  <fixed> change input 'select' with 'type'
+  * Make panel draggable
+  * Add scalebar plugin
+  * Create function add layer
+  * Refactoring Develop branch
+  * Merge to master
+
+
+  */
+
+
 
   /*@ngInject*/
   constructor(Auth, $http, $scope, $sce, socket, leafletData) {
@@ -44,26 +60,41 @@ export class MainController {
     };
 
 
-
-
-
-    //$scope.statusPerijinanClass = '';
+    //Jogja;
     $scope.center = {
       lat: -7.8049497,
       lng: 110.3738942,
       zoom: 15
     };
 
-
+    // initializing map with controls
     leafletData.getMap().then(function (map) {
 
       L.easyPrint({
         title: 'cetak',
-        position: 'bottomright',
+        position: 'topright',
         sizeModes: ['A4Portrait', 'A4Landscape']
       }).addTo(map);
 
       L.Control.geocoder().addTo(map);
+
+      var measureControl = L.control.measure({
+        position: 'topright',
+        primaryLengthUnit: 'meters',
+        secondaryLengthUnit: 'kilometers',
+        primaryAreaUnit: 'sqmeters',
+        activeColor: '#FF5A00',
+        completedColor: '##EAFF00'
+      });
+      measureControl.addTo(map);
+
+
+      var graphicScale = L.control.graphicScale({
+        fill: "hollow",
+        doubleLine: "true",
+        showSubunits: "false"
+      }).addTo(map);
+
 
       //## custom control
 
@@ -94,40 +125,35 @@ export class MainController {
         .addTo(map); */
 
 
-      //search toolbar. 
-      /*  
+      //slider toolbar. 
       L.control.custom({
-          position: 'topleft',
-          content: '<div class="input-group">' +
+          position: 'bottomright',
+          /*content: '<div class="input-group">' +
             '    <input type="text" class="form-control input-sm" placeholder="Search">' +
             '    <span class="input-group-btn">' +
             '        <button class="btn btn-default btn-sm" type="button">Go!</button>' +
             '    </span>' +
             '</div>',
-          classes: '',
+            */
+          content: '<div>' +
+            '<input type="range" min="0" max="0.7" value="0.5" step="0.05">' +
+            '</div>',
+          events: {
+            input: function (e) {
+              $scope.setOpacity(e.srcElement.value);
+            }
+
+          },
           style: {
-            position: 'absolute',
-            left: '50px',
-            top: '0px',
-            width: '200px',
+            width: '200px'
           },
         })
-        .addTo(map); */
+        .addTo(map);
     });
 
 
     //## Callback function from Geoserver JSONP
     window.parseResponse = function (data) {
-      //$scope.geojson = data;
-
-      var rdtrStyle = {
-        fillColor: 'green',
-        weight: 0,
-        //opacity: 10,
-        color: 'white',
-        dashArray: '0'
-        //fillOpacity: 0
-      };
 
       function zonaStyle(feature) {
         var colorToUse;
@@ -152,30 +178,33 @@ export class MainController {
 
 
 
-      // accessing Leaflet directly
+      // Initializing data from GeoJSONP
       leafletData.getMap().then(function (map) {
-        var measureControl = L.control.measure({
-          position: 'bottomright',
-          primaryLengthUnit: 'meters',
-          secondaryLengthUnit: 'kilometers',
-          primaryAreaUnit: 'sqmeters',
-          activeColor: '#FF5A00',
-          completedColor: '##EAFF00'
-        });
-        measureControl.addTo(map);
-
-
-
 
         var rdtrGeoJSON = new L.GeoJSON(null, {
           style: zonaStyle,
           onEachFeature: function (feature, layer) {
-            layer.bindPopup('<strong>' + feature.properties.zona +
+
+            $scope.setOpacity = function (opa) {
+              rdtrGeoJSON.setStyle({
+                //opacity : opa,
+                fillOpacity: opa
+              });
+            };
+
+
+            var popup = layer.bindPopup('<strong>' + feature.properties.zona +
               '</strong><p>Sub-zona: ' +
               feature.properties.sub_zona + '</p>' +
               '<button class="btn btn-sm btn-block btn-success" data-toggle="modal" data-target="#myModal">' +
               'Cek Penggunaan </button>'
             );
+
+            popup.on("popupclose", function (e) {
+              this.setStyle({
+                "weight": 0.5
+              });
+            });
 
             layer.on('mouseover', function () {
               $scope.mouseOver = feature.properties;
@@ -188,14 +217,20 @@ export class MainController {
             });
             layer.on('click', function () {
               $scope.focusFeature = feature.properties;
-              console.log($scope.focusFeature.kode);
+              this.setStyle({
+                "weight": 5
+              });
+              //console.log($scope.focusFeature.kode);
 
             });
-          }
+          } //onEachFeature
 
         });
 
         rdtrGeoJSON.addData(data).addTo(map);
+
+
+
 
       }); //parse response
     }
@@ -398,21 +433,40 @@ export class MainController {
         console.log('error', error.data);
       });
 
-
-
-
-
     } //cek izin intensitas pemanfaatan ruang
-
 
   } //constructor
 
 
   $onInit() {
     this.$scope.getData(); // initializing view by getting data
-    this.$scope.getKegiatan();
+    this.$scope.getKegiatan();   
+   
+    
+    
+    $(function () {
+      $('body').on('mousedown', '#drag', function () {
+        $(this).addClass('draggable').parents().on('mousemove', function (e) {
+          var tops = e.pageY - $('.draggable').outerHeight() / 8;
+          var lefts = e.pageX - $('.draggable').outerWidth() /8 ;
+          console.log(tops, lefts);
+          
+          e.preventDefault();
+          $('.draggable').offset({
+            top: e.pageY - $('.draggable').outerHeight() /8 ,
+            left: e.pageX - $('.draggable').outerWidth() /8
+          }).on('mouseup', function () {
+            $(this).removeClass('draggable');
+          });
+        });
+        
+      }).on('mouseup', function () {
+        $('.draggable').removeClass('draggable');
+      });
+    });
+    
 
-  }
+  } //onInit
 
 } //controller
 

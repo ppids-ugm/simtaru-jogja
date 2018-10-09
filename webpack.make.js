@@ -43,32 +43,33 @@ module.exports = function makeWebpackConfig(options) {
       vendor: [
         'script-loader!popper.js',
         'script-loader!jquery',
+        'script-loader!jquery-ui',
         'script-loader!bootstrap',
         'angular',
+        //'jquery-ui',
         'admin-lte',
-        'lobipanel-angularjs',
+        //'lobipanel',
+        //'lobipanel-angularjs',
         'angular-animate',
+        'angular-touch',
         'angular-aria',
         'angular-cookies',
         'angular-resource',
         'angular-sanitize',
         'angular-socket-io',
-        //'angular-ui-bootstrap',
+        'angular-simple-logger',
+        'angular-ui-bootstrap',
         'angular-ui-router',
         //'angular-ui-router-css',
         'lodash',
         'leaflet',
         'leaflet-control-custom',
-        'angular-simple-logger',
         'ui-leaflet',
         'leaflet-measure',
         'leaflet-easyprint',
-        'leaflet-control-geocoder'
-        
-        //'ui-leaflet-layers'
-        
-        
-        
+        'leaflet-graphicscale',
+        'leaflet-control-geocoder'        
+        //'ui-leaflet-layers'       
       ]
     };
   }

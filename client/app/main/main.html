@@ -1,5 +1,25 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
+
+  <!--div class="panel draggable">
+      <div class="box box-success box-solid">
+          <div class="box-header with-border">
+            <h3 class="box-title">Removable</h3>
+
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+            
+          </div>
+          
+          <div class="box-body">
+            The body of the box
+          </div>
+          
+        </div>
+      </div-->
+
+
   <!-- Content Header (Page header) -->
   <div class="map-wrapper">
     <leaflet height="100%" width="100%" layers="map.layers" lf-center="center"></leaflet>
@@ -24,10 +44,11 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade in" id="myModal" tabindex="-1" role="dialog" data-backdrop="false" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
+<div class="modal fade in" id="myModal" tabindex="-1" 
+  role="dialog" data-backdrop="false" aria-labelledby="myModalLabel">
+  <div class="modal-dialog"  role="document">
 
-    <div class="modal-content">
+    <div class="modal-content drag" id="drag">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times"></i></button>
         <h4 class="modal-title">Periksa Perizinan</h4>
@@ -39,8 +60,11 @@
             <form role="form" _lpchecked="1">
               <div class="form-group">
                 <label>Pilih Jenis Kegiatan</label>
-                <select type="text" class="form-control select2 select2-hidden-accessible" ng-model="kegiatanTerpilih"
-                  ng-options="x for x in rincianKegiatan" ng-change="getFeature(focusFeature.kode, kegiatanTerpilih)"></select>
+                <input type="text" class="form-control" list="rincian" 
+                ng-model="kegiatanTerpilih" ng-change="getFeature(focusFeature.kode, kegiatanTerpilih)">
+                <datalist id="rincian">
+                    <option ng-repeat="x in rincianKegiatan" value="{{x}}">
+                </datalist>
               </div>
               <div class="form-group">
                 <label>Sub-Zona</label>
