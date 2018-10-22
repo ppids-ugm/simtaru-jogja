@@ -88,7 +88,7 @@ export function findQuery(req, res) {
 //find SKRK by MongoDB Query
 export function findDistinct(req, res) {
   //console.log('sampai sini', req.query);
-  //var queryString = "{skrk."+ req.query + " ";
+  var queryString = "{skrk."+ req.query + " ";
   return Skrk.find().distinct('Kegiatan').exec()
     .then(respondWithResult(res))
     .catch(handleError(res));

@@ -1,7 +1,6 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import routing from './main.routes';
-import 'draggabilly/dist/draggabilly.pkgd.js';
 
 
 export class MainController {
@@ -248,7 +247,8 @@ export class MainController {
     //## Angular load Geoserver GeoJSON via JSONP (setup Geoserver JSONP first)
     $scope.getData = function () {
       // Geoserver endpoint. Change accordingly
-      var url_geojson = 'http://localhost:8089/geoserver/simtaru/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=simtaru:rdtr_kota&outputFormat=text%2Fjavascript&srsName:EPSG:4326';
+      //var url_geojson = 'http://localhost:8089/geoserver/simtaru/ows?service=WFS&version=1.0.0&request=GetFeature&//typeName=simtaru:rdtr_kota&outputFormat=text%2Fjavascript&srsName:EPSG:4326';
+      var url_geojson = 'http://geoportal.ppids.ft.ugm.ac.id/geoserver/sitaru/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=sitaru%3Apola_ruang_rdtr&outputFormat=text%2Fjavascript&srsName:EPSG:4326';
       // JSONP must use $sce for trusted url
       $http.jsonp($sce.trustAsResourceUrl(url_geojson))
         .then(function (response) {})
@@ -259,6 +259,14 @@ export class MainController {
     $scope.map = {
       layers: {
         baselayers: {
+          esri: {
+            name: 'ESRI Imagery',
+            type: 'xyz',
+            url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+            layerOptions: {
+              attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+            }
+          },
           carto: {
             name: 'Carto Positron',
             type: 'xyz',
@@ -279,15 +287,8 @@ export class MainController {
               attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
               continuousWorld: true
             }
-          },
-          esri: {
-            name: 'ESRI Imagery',
-            type: 'xyz',
-            url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-            layerOptions: {
-              attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-            }
           }
+          
 
         },
         overlays: {
@@ -319,7 +320,7 @@ export class MainController {
       };
       $http({
         method: 'GET',
-        url: 'http://localhost:3000/api/skrks/query',
+        url: '/api/skrks/query',
         params: params
       }).then(function (success) {
         //$scope.statusPerijinan = success.data[0].skrk[kode];
@@ -356,7 +357,7 @@ export class MainController {
 
     //get list of kegiatan di db
     $scope.getKegiatan = function () {
-      $http.get('http://localhost:3000/api/skrks/distinct').then(function (success) {
+      $http.get('/api/skrks/distinct').then(function (success) {
         //console.log('success', success.data);
         for (var i = 0; i <= success.data.length; i++) {
           $scope.rincianKegiatan.push(success.data[i]);
@@ -395,7 +396,7 @@ export class MainController {
       };
       $http({
         method: 'GET',
-        url: 'http://localhost:3000/api/intensitasruangs/query',
+        url: '/api/intensitasruangs/query',
         params: params
       }).then(function (success) {
         console.log('hasil skrk', success.data);
@@ -451,12 +452,12 @@ export class MainController {
     this.$scope.getData(); // initializing view by getting data
     this.$scope.getKegiatan();   
    
-    
+    /*
     var elem = document.querySelector('.draggable');
     var draggie = new Draggabilly (elem, {
       handle: '.drag'
     });
-    
+    */
     
     /*
     $(function () {
