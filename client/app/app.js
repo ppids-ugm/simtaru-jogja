@@ -6,12 +6,11 @@ import ngTouch from 'angular-touch';
 import ngCookies from 'angular-cookies';
 import ngResource from 'angular-resource';
 import ngSanitize from 'angular-sanitize';
-
-import 'angular-socket-io';
-
 import uiRouter from 'angular-ui-router';
 
+import 'angular-socket-io';
 import 'angular-validation-match';
+
 
 import {
   routeConfig
@@ -27,8 +26,8 @@ import constants from './app.constants';
 import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
 import AdminlteComponent from './adminlte/adminlte.component';
-import dataFactory from './dataFactory/dataFactory.service';
-import PersilComponent from './persil/persil.component';
+
+
 
 
 
@@ -36,7 +35,7 @@ import './app.scss';
 
 angular.module('starlingApp', [ngCookies, ngResource, ngSanitize, ngAnimate, ngTouch, 'btford.socket-io', uiRouter,
   _Auth, account, admin, 'validation.match', navbar, footer, main, constants, AdminlteComponent,
-  socket, util, 'nemLogging', 'ui-leaflet', dataFactory, PersilComponent//\,  ngPopup
+  socket, util, 'nemLogging', 'ui-leaflet'
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

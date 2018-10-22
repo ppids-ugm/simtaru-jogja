@@ -60,6 +60,8 @@ module.exports = function makeWebpackConfig(options) {
         'angular-simple-logger',
         'angular-ui-bootstrap',
         'angular-ui-router',
+        //'ng-popup',
+        'draggabilly',
         //'angular-ui-router-css',
         'lodash',
         'leaflet',
@@ -68,8 +70,9 @@ module.exports = function makeWebpackConfig(options) {
         'leaflet-measure',
         'leaflet-easyprint',
         'leaflet-graphicscale',
-        'leaflet-control-geocoder'        
-        //'ui-leaflet-layers'       
+        'leaflet.locatecontrol',
+        'leaflet-control-geocoder'
+        
       ]
     };
   }

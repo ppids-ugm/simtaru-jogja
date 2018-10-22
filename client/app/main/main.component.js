@@ -1,6 +1,8 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import routing from './main.routes';
+import 'draggabilly/dist/draggabilly.pkgd.js';
+
 
 export class MainController {
 
@@ -11,8 +13,9 @@ export class MainController {
   <fixed> Move icons to top right
   <fixed> Fix leaflet control with layer
   <fixed> change input 'select' with 'type'
-  * Make panel draggable
-  * Add scalebar plugin
+  <partially fixed> Make panel draggable
+  <fixed> Add scalebar plugin
+  * recreate print function
   * Create function add layer
   * Refactoring Develop branch
   * Merge to master
@@ -70,13 +73,20 @@ export class MainController {
     // initializing map with controls
     leafletData.getMap().then(function (map) {
 
+      
+      
+      L.control.locate({
+        position: 'topright'
+
+      }).addTo(map);
+
+      L.Control.geocoder().addTo(map);
       L.easyPrint({
         title: 'cetak',
         position: 'topright',
         sizeModes: ['A4Portrait', 'A4Landscape']
       }).addTo(map);
-
-      L.Control.geocoder().addTo(map);
+      
 
       var measureControl = L.control.measure({
         position: 'topright',
@@ -303,7 +313,6 @@ export class MainController {
 
     //## Get feature from SKRK MongoDB
     $scope.getFeature = function (kode, kegiatan) {
-      //console.log('isi skrk ', kode, kegiatan);
       var params = {
         skrk: kode,
         kegiatan: kegiatan
@@ -443,14 +452,17 @@ export class MainController {
     this.$scope.getKegiatan();   
    
     
+    var elem = document.querySelector('.draggable');
+    var draggie = new Draggabilly (elem, {
+      handle: '.drag'
+    });
     
+    
+    /*
     $(function () {
       $('body').on('mousedown', '#drag', function () {
+
         $(this).addClass('draggable').parents().on('mousemove', function (e) {
-          var tops = e.pageY - $('.draggable').outerHeight() / 8;
-          var lefts = e.pageX - $('.draggable').outerWidth() /8 ;
-          console.log(tops, lefts);
-          
           e.preventDefault();
           $('.draggable').offset({
             top: e.pageY - $('.draggable').outerHeight() /8 ,
@@ -464,7 +476,7 @@ export class MainController {
         $('.draggable').removeClass('draggable');
       });
     });
-    
+    */
 
   } //onInit
 
