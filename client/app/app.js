@@ -8,6 +8,7 @@ import ngResource from 'angular-resource';
 import ngSanitize from 'angular-sanitize';
 import uiRouter from 'angular-ui-router';
 
+
 import 'angular-socket-io';
 import 'angular-validation-match';
 
@@ -26,6 +27,7 @@ import constants from './app.constants';
 import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
 import AdminlteComponent from './adminlte/adminlte.component';
+import PrintComponent from './print/print.component';
 
 
 
@@ -34,8 +36,8 @@ import AdminlteComponent from './adminlte/adminlte.component';
 import './app.scss';
 
 angular.module('starlingApp', [ngCookies, ngResource, ngSanitize, ngAnimate, ngTouch, 'btford.socket-io', uiRouter,
-  _Auth, account, admin, 'validation.match', navbar, footer, main, constants, AdminlteComponent,
-  socket, util, 'nemLogging', 'ui-leaflet'
+  _Auth, account, admin, 'validation.match', navbar, footer, main, constants, AdminlteComponent, PrintComponent,
+  socket, util, 'nemLogging', 'ui-leaflet', 'xeditable'
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

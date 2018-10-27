@@ -1,0 +1,24 @@
+@import '~ng-popup/dist/ngPopup.min.css';
+
+navbar,
+aside,
+header {
+  display: none;
+}
+
+body {
+  font: 12pt Georgia, "Times New Roman", Times, serif;
+  line-height: 1.3;
+}
+
+@page {
+  size: A4;
+  margin: 2cm;
+
+}
+
+@page:left{
+    @bottom-left {
+      content: "Page " counter(page) " of " counter(pages);
+    }
+  }
