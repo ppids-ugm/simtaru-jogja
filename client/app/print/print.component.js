@@ -6,8 +6,11 @@ import routes from './print.routes';
 
 export class PrintComponent {
   /*@ngInject*/
-  constructor($scope) {
-    this.message = 'Hello';
+  constructor($scope, $stateParams, $rootScope) {
+    $scope.param = $stateParams;
+    $rootScope.show = false;
+    
+ 
 
     
   }

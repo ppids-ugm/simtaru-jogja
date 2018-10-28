@@ -15,7 +15,7 @@ export class NavbarComponent {
 
   debugMode = true;
 
-  constructor(Auth) {
+  constructor(Auth, $rootScope) {
     'ngInject';
 
 

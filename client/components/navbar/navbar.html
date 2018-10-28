@@ -1,5 +1,5 @@
 <!-- Main Header -->
-<header class="main-header">
+<header class="main-header" ng-show="$root.show">
 
   <!-- Logo -->
   <a href="#" style="text-decoration: none;" class="logo">
@@ -187,7 +187,7 @@
 
 
 <!-- Left side column. contains the logo and sidebar -->
-<aside class="main-sidebar">
+<aside class="main-sidebar" ng-show="$root.show">
 
   <!-- sidebar: style can be found in sidebar.less -->
   <section class="sidebar">
@@ -271,7 +271,7 @@
 
 
 <!-- Control Sidebar -->
-<aside class="control-sidebar control-sidebar-dark">
+<aside class="control-sidebar control-sidebar-dark" ng-show="$root.show">
   <!-- Create the tabs -->
   <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
     <li class="active">

@@ -1,28 +1,10 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import routing from './main.routes';
-
+//import 'lobipanel/dist/js/lobipanel.min.js';
+//const interact = require('interactjs/dist/interact.js');
 
 export class MainController {
-
-
-  /*
-  ##### TODO #####
-  <skipped> Install leaflet search 
-  <fixed> Move icons to top right
-  <fixed> Fix leaflet control with layer
-  <fixed> change input 'select' with 'type'
-  <partially fixed> Make panel draggable
-  <fixed> Add scalebar plugin
-  * recreate print function
-  * Create function add layer
-  * Refactoring Develop branch
-  * Merge to master
-
-
-  */
-
-
 
   /*@ngInject*/
   constructor(Auth, $http, $scope, $sce, socket, leafletData) {
@@ -36,6 +18,7 @@ export class MainController {
 
     //$scope.fromFactory = dataFactory;
     $scope.mouseOver = {};
+    //$scope.showPanel = false;
     //$scope.geojson = {};
     $scope.focusFeature = {};
     $scope.rincianKegiatan = [];
@@ -69,11 +52,13 @@ export class MainController {
       zoom: 15
     };
 
+    this.displayinfo = function(){
+      $scope.showPanel = true;
+    }
+
     // initializing map with controls
     leafletData.getMap().then(function (map) {
 
-      
-      
       L.control.locate({
         position: 'topright'
 
@@ -85,7 +70,7 @@ export class MainController {
         position: 'topright',
         sizeModes: ['A4Portrait', 'A4Landscape']
       }).addTo(map);
-      
+
 
       var measureControl = L.control.measure({
         position: 'topright',
@@ -205,7 +190,9 @@ export class MainController {
             var popup = layer.bindPopup('<strong>' + feature.properties.zona +
               '</strong><p>Sub-zona: ' +
               feature.properties.sub_zona + '</p>' +
-              '<button class="btn btn-sm btn-block btn-success" data-toggle="modal" data-target="#myModal">' +
+              //'<button class="btn btn-sm btn-block btn-success" data-toggle="modal" data-target="#myModal">' +
+              '<button class="btn btn-sm btn-block btn-success" data-toggle="collapse" data-target="#myBox">' +
+              
               'Cek Penggunaan </button>'
             );
 
@@ -217,7 +204,6 @@ export class MainController {
 
             layer.on('mouseover', function () {
               $scope.mouseOver = feature.properties;
-              //console.log(feature.properties);
             });
             layer.on('mouseout', function () {
               //this.setStyle({
@@ -288,26 +274,10 @@ export class MainController {
               continuousWorld: true
             }
           }
-          
+
 
         },
-        overlays: {
-          /*
-          rdtrprov: {
-            name: 'RDTR Kota Yogyakarta',
-            type: 'wms',
-            visible: false,
-            url: 'http://gis.jogjaprov.go.id:8080/geoserver/geonode/wms/',
-            layerOptions: {
-              layers: 'geonode:pola_ruang_rdtr_kota_jogja',
-              format: 'image/png',
-              opacity: 0.75,
-              version: '1.1.0',
-              crs: L.CRS.EPSG4326
-            }
-          }
-          */
-        }
+        overlays: {}
       }
     }; //map
 
@@ -439,6 +409,8 @@ export class MainController {
         $scope.intensitas.KDH = success.data[0].KDH[kodeSKRK] + '%';
 
 
+
+
       }, function (error) {
         console.log('error', error.data);
       });
@@ -450,15 +422,62 @@ export class MainController {
 
   $onInit() {
     this.$scope.getData(); // initializing view by getting data
-    this.$scope.getKegiatan();   
-   
+    this.$scope.getKegiatan();
+
+    this.auth.getCurrentUser(function (me) {
+      console.log(me._id);
+    });
+
+    interact('.draggable')
+      .draggable({
+        // enable inertial throwing
+        inertia: true,
+        // keep the element within the area of it's parent
+        restrict: {
+          restriction: "parent",
+          endOnly: true,
+          elementRect: {
+            top: 0,
+            left: 0,
+            bottom: 1,
+            right: 1
+          }
+        },
+        // enable autoScroll
+        autoScroll: true,
+
+        // call this function on every dragmove event
+        onmove: dragMoveListener
+      });
+
+    function dragMoveListener(event) {
+      var target = event.target,
+        // keep the dragged position in the data-x/data-y attributes
+        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+      // translate the element
+      target.style.webkitTransform =
+        target.style.transform =
+        'translate(' + x + 'px, ' + y + 'px)';
+
+      // update the posiion attributes
+      target.setAttribute('data-x', x);
+      target.setAttribute('data-y', y);
+    }
+
+    // this is used later in the resizing and gesture demos
+    window.dragMoveListener = dragMoveListener;
+
+
+
     /*
     var elem = document.querySelector('.draggable');
     var draggie = new Draggabilly (elem, {
       handle: '.drag'
     });
     */
-    
+
     /*
     $(function () {
       $('body').on('mousedown', '#drag', function () {
@@ -540,3 +559,18 @@ this.$http.get('/api/things')
   });
 
   */
+/*
+          rdtrprov: {
+            name: 'RDTR Kota Yogyakarta',
+            type: 'wms',
+            visible: false,
+            url: 'http://gis.jogjaprov.go.id:8080/geoserver/geonode/wms/',
+            layerOptions: {
+              layers: 'geonode:pola_ruang_rdtr_kota_jogja',
+              format: 'image/png',
+              opacity: 0.75,
+              version: '1.1.0',
+              crs: L.CRS.EPSG4326
+            }
+          }
+          */

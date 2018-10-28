@@ -11,6 +11,11 @@ var path = require('path');
 var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
 module.exports = function makeWebpackConfig(options) {
+
+  config.externals = {
+    interact: 'interactjs'
+  }
+
   /**
    * Environment type
    * BUILD is for generating minified builds
@@ -62,6 +67,7 @@ module.exports = function makeWebpackConfig(options) {
         'angular-ui-bootstrap',
         'angular-ui-router',
         'angular-xeditable',
+        //'interactjs',
         //'ng-popup',
         //'angular-ui-router-css',
         'lodash',
@@ -135,6 +141,10 @@ module.exports = function makeWebpackConfig(options) {
    * List: http://webpack.github.io/docs/list-of-loaders.html
    * This handles most of the magic responsible for converting modules
    */
+  config.noParse =  [
+    '/node_modules/interactjs/dist/interact.js',
+    '/node_modules/prebuiltlib/dist/build.js'
+  ];
 
   config.sassLoader = {
     outputStyle: 'compressed',

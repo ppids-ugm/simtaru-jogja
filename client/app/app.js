@@ -7,6 +7,8 @@ import ngCookies from 'angular-cookies';
 import ngResource from 'angular-resource';
 import ngSanitize from 'angular-sanitize';
 import uiRouter from 'angular-ui-router';
+//import interact from 'interactjs';
+
 
 
 import 'angular-socket-io';
@@ -46,8 +48,8 @@ angular.module('starlingApp', [ngCookies, ngResource, ngSanitize, ngAnimate, ngT
 
 
     angular.extend($rootScope, {
-      center: {},
-      markers: {}
+      style: {},
+      show: true
     });
 
 
