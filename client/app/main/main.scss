@@ -21,9 +21,31 @@
   top: 150px;
   left: 500px;
   max-width: 500px;
-
-  z-index: 850;
+  z-index: 1100;
   //background-color: transparent !important;
+}
+
+#box2 {
+  top: 200px;
+  left: 550px;
+  max-width: 700px;
+
+  form {
+    div {
+      padding: 0;
+    }
+  }
+}
+
+.small-box {
+  .inner{
+    text-align: right;
+    min-height: 120px;
+  }
+}
+
+.leaflet-control-container {
+  z-index: 750 !important;
 }
 
 

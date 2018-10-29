@@ -12,9 +12,7 @@ var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
 module.exports = function makeWebpackConfig(options) {
 
-  config.externals = {
-    interact: 'interactjs'
-  }
+  
 
   /**
    * Environment type
@@ -32,6 +30,10 @@ module.exports = function makeWebpackConfig(options) {
    * This is the object where all configuration gets set
    */
   var config = {};
+
+  config.externals = {
+    interact: 'interactjs'
+  };
 
   /**
    * Entry

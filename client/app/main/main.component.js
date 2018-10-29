@@ -12,12 +12,13 @@ export class MainController {
     this.$sce = $sce;
     this.socket = socket;
     this.$scope = $scope;
-    this.auth = Auth;
+    $scope.auth = Auth;
     //this.rootScope = $rootScope;
     this.leafletData = leafletData;
 
     //$scope.fromFactory = dataFactory;
     $scope.mouseOver = {};
+    $scope.currentUser = {};
     //$scope.showPanel = false;
     //$scope.geojson = {};
     $scope.focusFeature = {};
@@ -52,7 +53,7 @@ export class MainController {
       zoom: 15
     };
 
-    this.displayinfo = function(){
+    this.displayinfo = function () {
       $scope.showPanel = true;
     }
 
@@ -191,8 +192,8 @@ export class MainController {
               '</strong><p>Sub-zona: ' +
               feature.properties.sub_zona + '</p>' +
               //'<button class="btn btn-sm btn-block btn-success" data-toggle="modal" data-target="#myModal">' +
-              '<button class="btn btn-sm btn-block btn-success" data-toggle="collapse" data-target="#myBox">' +
-              
+              '<button class="btn btn-sm btn-block btn-success" data-toggle="collapse" data-target="#box1">' +
+
               'Cek Penggunaan </button>'
             );
 
@@ -210,12 +211,15 @@ export class MainController {
               //  'fillColor': '#ff0000'
               //});
             });
-            layer.on('click', function () {
+            layer.on('click', function (e) {
               $scope.focusFeature = feature.properties;
               this.setStyle({
                 "weight": 5
               });
-              //console.log($scope.focusFeature.kode);
+              angular.extend($scope.focusFeature, {
+                'koordinat': e.latlng
+              });
+              //console.log(e.latlng);
 
             });
           } //onEachFeature
@@ -298,27 +302,27 @@ export class MainController {
         switch (success.data[0].skrk[kode]) {
           case 'I':
             $scope.statusPerijinan.text = 'Pemanfaatan Diizinkan';
-            $scope.statusPerijinan.style = 'text-green';
+            $scope.statusPerijinan.style = 'bg-green';
             $scope.statusPerijinan.showDetail = true;
             break;
           case 'B':
             $scope.statusPerijinan.text = 'Pemanfaatan Memerlukan Izin Penggunaan Bersyarat';
-            $scope.statusPerijinan.style = 'text-aqua';
+            $scope.statusPerijinan.style = 'bg-aqua';
             $scope.statusPerijinan.showDetail = true;
             break;
           case 'X':
             $scope.statusPerijinan.text = 'Pemanfaatan Tidak Diizinkan';
-            $scope.statusPerijinan.style = 'text-red';
+            $scope.statusPerijinan.style = 'bg-red';
             $scope.statusPerijinan.showDetail = false;
             break;
           case 'T':
             $scope.statusPerijinan.text = 'Pemanfaatan Diizinkan Secara Terbatas';
-            $scope.statusPerijinan.style = 'text-yellow';
+            $scope.statusPerijinan.style = 'bg-yellow';
             $scope.statusPerijinan.showDetail = true;
             break;
           default:
             $scope.statusPerijinan.text = '';
-            $scope.statusPerijinan.style = 'text-gray';
+            $scope.statusPerijinan.style = 'bg-gray';
         }
       }, function (error) {
         console.log('error', error.data);
@@ -417,16 +421,45 @@ export class MainController {
 
     } //cek izin intensitas pemanfaatan ruang
 
+    // ----------------- function simpan pencarian ---------------------
+    $scope.simpanPencarian = function (cekIntensitas, intensitas, focusFeature) {
+      var userId;
+      var data = {
+        keteranganBgn: cekIntensitas,
+        hasilCek: intensitas,
+        zonasi: focusFeature
+      };
+
+      $scope.auth.getCurrentUser(
+        function (me) {
+          userId = me._id;
+          angular.extend(data, {
+            user: userId
+          })
+          console.log(data);
+          $http({
+            method: 'POST',
+            url: '/api/adviceplans',
+            data: data
+          }).then(function (success) {
+            console.log('simpan pencarian', success.data);
+          });
+          //console.log(cekIntensitas, intensitas, focusFeature);
+
+        });
+
+    } // simpan pencarian
+
+
+
   } //constructor
 
 
   $onInit() {
     this.$scope.getData(); // initializing view by getting data
     this.$scope.getKegiatan();
+    //this.$scope.currentUser = 
 
-    this.auth.getCurrentUser(function (me) {
-      console.log(me._id);
-    });
 
     interact('.draggable')
       .draggable({
@@ -445,10 +478,10 @@ export class MainController {
         },
         // enable autoScroll
         autoScroll: true,
-
         // call this function on every dragmove event
         onmove: dragMoveListener
       });
+
 
     function dragMoveListener(event) {
       var target = event.target,
@@ -461,12 +494,12 @@ export class MainController {
         target.style.transform =
         'translate(' + x + 'px, ' + y + 'px)';
 
-      // update the posiion attributes
+      // update the position attributes
       target.setAttribute('data-x', x);
       target.setAttribute('data-y', y);
     }
 
-    // this is used later in the resizing and gesture demos
+    // this is used later in the resizing and gesture 
     window.dragMoveListener = dragMoveListener;
 
 

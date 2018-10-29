@@ -4,9 +4,10 @@ import mongoose from 'mongoose';
 import {registerEvents} from './adviceplan.events';
 
 var AdviceplanSchema = new mongoose.Schema({
-  name: String,
-  info: String,
-  active: Boolean
+  user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  keteranganBgn: mongoose.Schema.Types.Mixed,
+  hasilCek: mongoose.Schema.Types.Mixed,
+  zonasi: mongoose.Schema.Types.Mixed
 });
 
 registerEvents(AdviceplanSchema);

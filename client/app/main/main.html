@@ -2,23 +2,125 @@
 <div class="content-wrapper">
 
   <!-- info window: cek kesesuaian-->
-  <div id="myBox" class="box box-primary box-solid draggable collapse">
+  <div id="box1" class="box box-primary box-solid draggable collapse">
     <div class="box-header with-border">
       <p class="box-title">Zona {{focusFeature.zona}}</p>
       <div class="box-tools pull-right">
         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
         </button>
-        <button type="button" class="btn btn-box-tool" data-toggle="collapse" data-target="#myBox"><i class="fa fa-times"></i></button>
+        <button type="button" class="btn btn-box-tool" data-toggle="collapse" data-target="#box1"><i class="fa fa-times"></i></button>
       </div>
     </div>
-
     <div class="box-body">
-      The body of the box
+      <div class="row">
+        <section class="col-lg-7">
+          <form role="form">
+            <div class="form-group">
+              <label>Sub-Zona</label>
+              <input type="text" disabled class="form-control" ng-model="focusFeature.sub_zona" placeholder="Sub-zona">
+            </div>
+            <div class="form-group">
+              <label>Pilih Jenis Kegiatan</label>
+              <input type="text" class="form-control" list="rincian" ng-model="kegiatanTerpilih" ng-change="getFeature(focusFeature.kode, kegiatanTerpilih)">
+              <datalist id="rincian">
+                <option ng-repeat="x in rincianKegiatan" value="{{x}}">
+              </datalist>
+            </div>
+          </form>
+          <button type="submit" ng-click="kegiatanTerpilih=''" class="btn btn-info btn-sm btn-block">Reset Pencarian</button>
+        </section>
+        <section class="col-lg-5">
+          <div ng-show="kegiatanTerpilih">
+            <div class="small-box" ng-class="statusPerijinan.style">
+              <div class="inner">
+                <p><strong>{{statusPerijinan.text}}</strong></p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-building"></i>
+              </div>
+              <a href="#" class="small-box-footer" ng-show="statusPerijinan.showDetail" data-toggle="collapse" data-target="#box2">tampilkan detil <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!--button type="submit" ng-click='getFeature(focusFeature.kode, kegiatanTerpilih)' class="btn btn-info">Periksa</button-->
+        </section>
+      </div>
     </div>
+  </div> <!-- info window 1 -->
 
-  </div>
+
+  <!-- info window 2: cek detil-->
+  <div id="box2" class="box box-success box-solid draggable collapse">
+    <div class="box-header with-border">
+      <p class="box-title">Detil Pemanfaatan</p>
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-toggle="collapse" data-target="#box2"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <div class="box-body">
+        <section class="col-lg-6">
+          <form role="form" class="form-horizontal">
+            <div ng-class="{'has-error': intensitas.error}" class="form-group">
+              <div class="col-sm-5">
+                <label><small>Luas Tanah</small></label>
+              </div>
+              <div class="col-sm-7">
+                <input type="number" min="40" class="form-control" ng-model="cekIntensitas.luasTanah" placeholder="Luas Tanah (meter2)"/>
+
+                <small id="help" ng-show="intensitas.error" class="form-text text-warning text-muted">Luas tanah
+                  minimal 40 meter persegi.</small>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-5">
+                <label><small>Luas Bangunan</small></label>
+              </div>
+              <div class="col-sm-7">
+                <input type="number" class="form-control" ng-model="cekIntensitas.luasBangunan" placeholder="Luas Bangunan (meter2)"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-5">
+                <label><small> Tinggi Bangunan</small></label>
+              </div>
+              <div class="col-sm-7">
+                <input type="number" class="form-control" ng-model="cekIntensitas.tinggiBangunan" placeholder="Tinggi Bangunan (meter)"/>
+              </div>
+
+            </div>
+            <div class="form-group">
+              <div class="col-sm-5">
+                <label><small>Jumlah Lantai</small></label>
+              </div>
+              <div class="col-sm-7">
+                <input type="number" class="form-control" ng-model="cekIntensitas.jumlahLantai" placeholder="Jumlah Lantai"/>
+              </div>
+            </div>
+          </form>
+          
+          <button type="submit" ng-click='cekPemanfaatan(cekIntensitas, focusFeature.kode)' class="btn btn-info btn-block">Periksa Perizinan</button>
 
 
+        </section>
+
+        <section class="col-lg-6">
+          <i>Kesesuaian KDB:</i>
+          <p>{{intensitas.KDB}}</p>
+          <i>Kesesuaian Tinggi Bangunan:</i>
+          <p>{{intensitas.Tinggi}}</p>
+          <i>Kesesuaian KLB:</i>
+          <p>{{intensitas.KLB}}</p>
+          <i>Syarat KDH:</i>
+          <p>{{intensitas.KDH}}</p>
+
+          <button ng-show="intensitas.KDB" ng-click="simpanPencarian(cekIntensitas, intensitas, focusFeature)" type="submit" class="btn btn-success btn-block">Simpan Data</button>
+        </section>
+
+
+      
+    </div>
+  </div> <!-- info window 2 -->
 
   <!-- Content Header (Page header) -->
   <div class="map-wrapper">
