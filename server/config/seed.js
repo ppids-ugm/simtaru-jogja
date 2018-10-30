@@ -2996,7 +2996,7 @@ export default function seedDatabaseIfNeeded() {
       .then(() => {
         Intensitasruang.create({
             "Kelas": "1",
-            "Keterangan": "Luas Tanah/Persil 40-100m2",
+            "Keterangan": "Luas Tanah/Persil 40-100", //meter persegi
             "Batas": {
               "min": 40,
               "max": 100
@@ -3071,7 +3071,7 @@ export default function seedDatabaseIfNeeded() {
             }
           }, {
             "Kelas": "2",
-            "Keterangan": "Luas Tanah/Persil 101-200m2",
+            "Keterangan": "Luas Tanah/Persil 101-200",
             "Batas": {
               "min": 101,
               "max": 200
@@ -3146,7 +3146,7 @@ export default function seedDatabaseIfNeeded() {
             }
           }, {
             "Kelas": "3",
-            "Keterangan": "Luas Tanah/Persil 201-400m2",
+            "Keterangan": "Luas Tanah/Persil 201-400",
             "Batas": {
               "min": 201,
               "max": 400
@@ -3221,7 +3221,7 @@ export default function seedDatabaseIfNeeded() {
             }
           }, {
             "Kelas": "4",
-            "Keterangan": "Luas Tanah/Persil 401-1000m2",
+            "Keterangan": "Luas Tanah/Persil 401-1000",
             "Batas": {
               "min": 401,
               "max": 1000
@@ -3296,7 +3296,7 @@ export default function seedDatabaseIfNeeded() {
             }
           }, {
             "Kelas": "5",
-            "Keterangan": "Luas Tanah/Persil >= 1001m2",
+            "Keterangan": "Luas Tanah/Persil >= 1001",
             "Batas": {
               "min": 1001,
               "max": 100000

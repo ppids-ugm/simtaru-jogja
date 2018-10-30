@@ -6,8 +6,12 @@ import routing from './main.routes';
 
 export class MainController {
 
+
+  //https://gis.stackexchange.com/questions/238528/how-to-enable-a-leaflet-draw-tool-programatically
+  //https://stackoverflow.com/questions/29724725/how-to-get-the-area-string-from-a-polygon-using-leaflet-draw
+
   /*@ngInject*/
-  constructor(Auth, $http, $scope, $sce, socket, leafletData) {
+  constructor(Auth, $http, $scope, $sce, socket, leafletData, $window) {
     this.$http = $http;
     this.$sce = $sce;
     this.socket = socket;
@@ -58,7 +62,7 @@ export class MainController {
     }
 
     // initializing map with controls
-    leafletData.getMap().then(function (map) {
+    leafletData.getMap('mainmap').then(function (map) {
 
       L.control.locate({
         position: 'topright'
@@ -174,7 +178,7 @@ export class MainController {
 
 
       // Initializing data from GeoJSONP
-      leafletData.getMap().then(function (map) {
+      leafletData.getMap('mainmap').then(function (map) {
 
         var rdtrGeoJSON = new L.GeoJSON(null, {
           style: zonaStyle,
@@ -341,9 +345,12 @@ export class MainController {
       });
     }; //getFeature list kegiatan SKRK
 
-    $scope.cekPemanfaatan = function (pemanfaatan, kodeSKRK) {
-      console.log('pemanfaatan', pemanfaatan);
 
+
+    // ----------------- function simpan pencarian ---------------------
+    $scope.cekPemanfaatan = function (pemanfaatan, kodeSKRK) {
+      //console.log('pemanfaatan', pemanfaatan);
+      
       //# pengkelasan sesuai /api/intensitasruangs
       if (pemanfaatan.luasTanah < 40) {
         $scope.intensitas.error = true;
@@ -410,7 +417,7 @@ export class MainController {
 
 
         // Tampilkan KDH
-        $scope.intensitas.KDH = success.data[0].KDH[kodeSKRK] + '%';
+        $scope.intensitas.KDH = (success.data[0].KDH[kodeSKRK]*pemanfaatan.luasTanah)/100;
 
 
 
@@ -443,10 +450,11 @@ export class MainController {
             data: data
           }).then(function (success) {
             console.log('simpan pencarian', success.data);
+            $window.location.href = '/print/'+success.data._id;
           });
-          //console.log(cekIntensitas, intensitas, focusFeature);
-
         });
+
+
 
     } // simpan pencarian
 

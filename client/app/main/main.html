@@ -1,5 +1,5 @@
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div id="mainPage" class="content-wrapper">
 
   <!-- info window: cek kesesuaian-->
   <div id="box1" class="box box-primary box-solid draggable collapse">
@@ -100,21 +100,30 @@
           </form>
           
           <button type="submit" ng-click='cekPemanfaatan(cekIntensitas, focusFeature.kode)' class="btn btn-info btn-block">Periksa Perizinan</button>
+        </section>
 
+        <section ng-hide="intensitas.KDB" class="col-lg-6">
+          <i> 
+            Masukkan Luas Tanah, Luas Bangunan, Tinggi bangunan dan jumlah lantai pada kolom di samping. 
+            <br/>
+            Tekan tombol <strong>"Periksa Perizinan" </strong> untuk memeriksa kesesuaian usulan penggunaan pada lokasi tersebut.
+            <br/>
+            Gunakan tombol <strong> "Simpan dan Cetak" </strong> untuk masuk ke halaman pencetakan Advise Planning sekaligus menyimpan pada hasil pencarian pada basisdata. 
+          </i>
 
         </section>
 
-        <section class="col-lg-6">
+        <section ng-show="intensitas.KDB" class="col-lg-6">
+          <p><strong>{{intensitas.keterangan}} m<sup>2</sup></strong></p>
           <i>Kesesuaian KDB:</i>
           <p>{{intensitas.KDB}}</p>
           <i>Kesesuaian Tinggi Bangunan:</i>
           <p>{{intensitas.Tinggi}}</p>
           <i>Kesesuaian KLB:</i>
           <p>{{intensitas.KLB}}</p>
-          <i>Syarat KDH:</i>
-          <p>{{intensitas.KDH}}</p>
+          <i>Syarat KDH: {{intensitas.KDH}} m<sup>2</sup> </i>
 
-          <button ng-show="intensitas.KDB" ng-click="simpanPencarian(cekIntensitas, intensitas, focusFeature)" type="submit" class="btn btn-success btn-block">Simpan Data</button>
+          <button ng-show="intensitas.KDB" ng-click="simpanPencarian(cekIntensitas, intensitas, focusFeature)" type="submit" class="btn btn-success btn-block">Simpan dan Cetak</button>
         </section>
 
 
@@ -124,7 +133,7 @@
 
   <!-- Content Header (Page header) -->
   <div class="map-wrapper">
-    <leaflet height="100%" width="100%" layers="map.layers" lf-center="center"></leaflet>
+    <leaflet id="mainmap" height="100%" width="100%" layers="map.layers" lf-center="center"></leaflet>
     <div class="row">
       <section class="col-lg-3 connectedSortable ui-sortable">
         <div class="box-body border-radius-none">

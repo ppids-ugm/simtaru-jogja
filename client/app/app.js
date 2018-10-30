@@ -7,7 +7,6 @@ import ngCookies from 'angular-cookies';
 import ngResource from 'angular-resource';
 import ngSanitize from 'angular-sanitize';
 import uiRouter from 'angular-ui-router';
-//import interact from 'interactjs';
 
 
 
@@ -30,8 +29,6 @@ import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
 import AdminlteComponent from './adminlte/adminlte.component';
 import PrintComponent from './print/print.component';
-
-
 
 
 

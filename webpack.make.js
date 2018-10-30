@@ -69,6 +69,7 @@ module.exports = function makeWebpackConfig(options) {
         'angular-ui-bootstrap',
         'angular-ui-router',
         'angular-xeditable',
+        'moment',
         //'interactjs',
         //'ng-popup',
         //'angular-ui-router-css',
@@ -352,6 +353,11 @@ module.exports = function makeWebpackConfig(options) {
         'process.env': {
           NODE_ENV: '"production"'
         }
+      }),
+
+      // provide plugin for qrcode generator. ref: https://github.com/monospaced/angular-qrcode
+      new webpack.ProvidePlugin({
+        qrcode: 'qrcode-generator',
       })
     );
   }
