@@ -1,46 +1,17 @@
 <!-- info window: cek kesesuaian-->
-<div id="menuBox" class="box box-primary box-solid draggable collapse">
+<div id="menuBox" class="box box-primary box-solid draggable collapse in no-print">
     <div class="box-header with-border">
-      <p class="box-title">Zona {{focusFeature.zona}}</p>
+      <p class="box-title">Panel Menu</p>
       <div class="box-tools pull-right">
         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
         </button>
-        <button type="button" class="btn btn-box-tool" data-toggle="collapse" data-target="#box1"><i class="fa fa-times"></i></button>
       </div>
     </div>
     <div class="box-body">
-      <div class="row">
-        <section class="col-lg-7">
-          <form role="form">
-            <div class="form-group">
-              <label>Sub-Zona</label>
-              <input type="text" disabled class="form-control" ng-model="focusFeature.sub_zona" placeholder="Sub-zona">
-            </div>
-            <div class="form-group">
-              <label>Pilih Jenis Kegiatan</label>
-              <input type="text" class="form-control" list="rincian" ng-model="kegiatanTerpilih" ng-change="getFeature(focusFeature.kode, kegiatanTerpilih)">
-              <datalist id="rincian">
-                <option ng-repeat="x in rincianKegiatan" value="{{x}}">
-              </datalist>
-            </div>
-          </form>
-          <button type="submit" ng-click="kegiatanTerpilih=''" class="btn btn-info btn-sm btn-block">Reset Pencarian</button>
-        </section>
-        <section class="col-lg-5">
-          <div ng-show="kegiatanTerpilih">
-            <div class="small-box" ng-class="statusPerijinan.style">
-              <div class="inner">
-                <p><strong>{{statusPerijinan.text}}</strong></p>
-              </div>
-              <div class="icon">
-                <i class="fa fa-building"></i>
-              </div>
-              <a href="#" class="small-box-footer" ng-show="statusPerijinan.showDetail" data-toggle="collapse" data-target="#box2">tampilkan detil <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!--button type="submit" ng-click='getFeature(focusFeature.kode, kegiatanTerpilih)' class="btn btn-info">Periksa</button-->
-        </section>
-      </div>
+        <button type="button" ui-sref='main' class="btn btn-info btn-block"> <i class="fa fa-home"></i> Kembali 
+        </button>
+        <button type="button" ng-click="cetak()" class="btn btn-success btn-block"> <i class="fa fa-print"></i> Cetak 
+        </button>
     </div>
   </div> <!-- info window 1 -->
 
@@ -125,7 +96,7 @@
     </div>
 
     <p> Tampilan peta:</p>
-    <leaflet id="printmap" height="200px" width="100%"></leaflet>
+    <leaflet id="printmap" layers="map.layers" height="200px" width="100%"></leaflet>
     <br />
     <div class="row">
       <div class="col-xs-5"> 4. KDB/BCR (Luas lantai dasar bangunan maksimal)</div>
@@ -195,12 +166,12 @@
   </div>
   <br />
   <div class="row">
-    <div class="col-xs-8">
+    <div class="col-xs-7">
       <br/><br/>
       <p>Scan Kode Validasi:</p>
       <div id="qrcode"></div>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-5">
       <br/><br/>
       <p style="text-align:center">Yogyakarta, {{tanggal}}</p>
       <p style="text-align:center">A.n. KEPALA DINAS</p>
@@ -209,7 +180,7 @@
         dan Pengawasan Tata Ruang
       </p>
       <br/><br/><br/>
-      <p style="text-align:center">SITI NOER ISTIQOMAH, ST., MM.</p>
+      <p style="text-align:center"><u>SITI NOER ISTIQOMAH, ST., MM.</u></p>
       <p style="text-align:center">NIP. 196706181996032001</p>
 
     </div>

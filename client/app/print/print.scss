@@ -44,15 +44,39 @@ hr {
 }
 
 
+
+
+  #menuBox {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    max-width: 200px;
+    z-index: 1100;
+    //background-color: transparent !important;
+  }
+  
+
+  .leaflet-top {
+    display: none;
+  };
+
 @media print {
+
+  .no-print {
+    display: none;
+    
+  };
+
+
+
   .page {
     padding: 0;
-  }
+  };
 
   @page {
     size: A4;
     margin: 2cm;
-  }
+  };
 
   body {
     font: 12pt Georgia, "Times New Roman", Times, serif;
@@ -60,8 +84,4 @@ hr {
     background: #fff !important;
     color: #000;
   }
-
-
-
-
 }

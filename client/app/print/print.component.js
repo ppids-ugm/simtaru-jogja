@@ -18,7 +18,7 @@ import moment from 'moment';
 
 export class PrintComponent {
   /*@ngInject*/
-  constructor($scope, $http, $state, leafletData, $rootScope) {
+  constructor($scope, $window, $http, $state, leafletData, $rootScope) {
     this.param = $state.params;
     $rootScope.show = false; // remove the navbar
 
@@ -47,7 +47,7 @@ export class PrintComponent {
         //setting map
         console.log(latlng);
         leafletData.getMap('printmap').then(function (map) {
-          map.setView(latlng, 17);
+          map.setView(latlng, 19);
           //var marker = L.marker([-7.812577081629225, 110.35916805267335]).addTo(map);
           var popup = L.popup()
             .setLatLng(latlng)
@@ -60,6 +60,10 @@ export class PrintComponent {
       });
     };
 
+    $scope.cetak = function(){
+      $window.print();
+    }
+
     //get current location for QRCode
     angular.element('#qrcode').qrcode({width: 150,height: 150,text: window.location.href});
 
@@ -67,6 +71,22 @@ export class PrintComponent {
     moment.locale('id');
     $scope.tanggal = moment().format('LL');
     console.log($scope.tanggal);
+
+
+    $scope.map = {
+      layers: {
+        baselayers: {
+          esri: {
+            name: 'Google',
+            type: 'xyz',
+            url: 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
+            layerOptions: {
+              attribution: 'Tiles &copy; Google Street Hybrid'
+            }
+          }
+        }
+      }
+    }; //map
 
   }
 

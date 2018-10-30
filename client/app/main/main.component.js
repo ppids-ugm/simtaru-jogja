@@ -11,13 +11,13 @@ export class MainController {
   //https://stackoverflow.com/questions/29724725/how-to-get-the-area-string-from-a-polygon-using-leaflet-draw
 
   /*@ngInject*/
-  constructor(Auth, $http, $scope, $sce, socket, leafletData, $window) {
+  constructor(Auth, $http, $scope, $sce, $rootScope, socket, leafletData, $window) {
     this.$http = $http;
     this.$sce = $sce;
     this.socket = socket;
     this.$scope = $scope;
     $scope.auth = Auth;
-    //this.rootScope = $rootScope;
+    $rootScope.show = true;
     this.leafletData = leafletData;
 
     //$scope.fromFactory = dataFactory;
@@ -70,13 +70,7 @@ export class MainController {
       }).addTo(map);
 
       L.Control.geocoder().addTo(map);
-      L.easyPrint({
-        title: 'cetak',
-        position: 'topright',
-        sizeModes: ['A4Portrait', 'A4Landscape']
-      }).addTo(map);
-
-
+      
       var measureControl = L.control.measure({
         position: 'topright',
         primaryLengthUnit: 'meters',
