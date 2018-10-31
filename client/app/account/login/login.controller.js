@@ -13,9 +13,10 @@ export default class LoginController {
 
 
   /*@ngInject*/
-  constructor(Auth, $state) {
+  constructor(Auth, $state, toastr) {
     this.Auth = Auth;
     this.$state = $state;
+    this.toastr = toastr;
   }
 
   login(form) {
@@ -27,6 +28,7 @@ export default class LoginController {
         password: this.user.password
       })
         .then(() => {
+          this.toastr.success('Login Berhasil!');
           // Logged in, redirect to home
           this.$state.go('main');
         })

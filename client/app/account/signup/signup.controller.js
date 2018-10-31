@@ -13,9 +13,10 @@ export default class SignupController {
 
 
   /*@ngInject*/
-  constructor(Auth, $state) {
+  constructor(Auth, $state, toastr) {
     this.Auth = Auth;
     this.$state = $state;
+    this.toastr = toastr;
   }
 
   register(form) {
@@ -29,6 +30,7 @@ export default class SignupController {
       })
         .then(() => {
           // Account created, redirect to home
+          this.toastr.success('Pengguna baru berhasil dibuat!');
           this.$state.go('main');
         })
         .catch(err => {

@@ -11,11 +11,12 @@ export class MainController {
   //https://stackoverflow.com/questions/29724725/how-to-get-the-area-string-from-a-polygon-using-leaflet-draw
 
   /*@ngInject*/
-  constructor(Auth, $http, $scope, $sce, $rootScope, socket, leafletData, $window) {
+  constructor(Auth, $http, $scope, $sce, toastr, $rootScope, socket, leafletData, $window) {
     this.$http = $http;
     this.$sce = $sce;
     this.socket = socket;
     this.$scope = $scope;
+    $scope.toastr = toastr;
     $scope.auth = Auth;
     $rootScope.show = true;
     this.leafletData = leafletData;
@@ -341,7 +342,7 @@ export class MainController {
 
 
 
-    // ----------------- function simpan pencarian ---------------------
+    // ----------------- function cek pemanfaatan ---------------------
     $scope.cekPemanfaatan = function (pemanfaatan, kodeSKRK) {
       //console.log('pemanfaatan', pemanfaatan);
       
@@ -413,9 +414,6 @@ export class MainController {
         // Tampilkan KDH
         $scope.intensitas.KDH = (success.data[0].KDH[kodeSKRK]*pemanfaatan.luasTanah)/100;
 
-
-
-
       }, function (error) {
         console.log('error', error.data);
       });
@@ -443,6 +441,7 @@ export class MainController {
             url: '/api/adviceplans',
             data: data
           }).then(function (success) {
+            $scope.toastr.success('Data berhasil disimpan!');
             console.log('simpan pencarian', success.data);
             $window.location.href = '/print/'+success.data._id;
           });
