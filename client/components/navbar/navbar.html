@@ -129,18 +129,21 @@
           <!-- Menu Toggle Button -->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-target="dropdown" aria-expanded="false">
             <!-- The user image in the navbar-->
-            <img src="http://via.placeholder.com/160x160" class="user-image" alt="User Image">
+            <img ng-show="!isAdmin" src="../../assets/images/user.png" class="user-image" alt="User Image">
+            <img ng-show="isAdmin" src="../../assets/images/admin.png" class="user-image" alt="User Image">
             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-            <span class="hidden-xs">Admin</span>
+            <span class="hidden-xs">{{me}}</span>
           </a>
           <ul class="dropdown-menu">
             <!-- The user image in the menu -->
             <li class="user-header">
-              <img src="http://via.placeholder.com/160x160" class="img-circle" alt="User Image">
+              <img ng-show="isAdmin" src="../../assets/images/admin.png" class="img-circle" alt="User Image">
+              <img ng-show="!isAdmin" src="../../assets/images/user.png" class="img-circle" alt="User Image">
+              
 
               <p>
-                Dany Laksono - Admin
-                <small>Member since Nov. 2012</small>
+                {{me}} <i ng-if="isAdmin"> - Admin </i>
+                <small>Member since August. 2018</small>
               </p>
             </li>
             <!-- Menu Body -->
@@ -247,22 +250,22 @@
           </a>
         </li>
 
-      <li class="treeview" ui-sref-active="active">
+      <li ng-show="isAdmin" ui-sref-active="active">
         <a ui-sref="admin">
           <i class="fa fa-gears"></i>
-          <span >Admin</span>
+          <span >Manajemen Pengguna</span>
           <!--span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span-->
         </a>
-        <ul ng-if="!$ctrl.debugMode" class="treeview-menu">
+        <!--ul ng-if="!$ctrl.debugMode" class="treeview-menu">
           <li>
             <a href="#">Link in level 2</a>
           </li>
           <li>
             <a href="#">Link in level 2</a>
           </li>
-        </ul>
+        </ul -->
       </li>
     </ul>
     <!-- /.sidebar-menu -->
@@ -285,7 +288,7 @@
         <i class="fa fa-home"></i>
       </a>
     </li>
-    <li>
+    <li ng-if="!$ctrl.debugMode">
       <a href="#control-sidebar-settings-tab" data-toggle="tab">
         <i class="fa fa-gears"></i>
       </a>
@@ -346,7 +349,7 @@
     <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
     <!-- /.tab-pane -->
     <!-- Settings tab content -->
-    <div class="tab-pane" id="control-sidebar-settings-tab">
+    <div ng-if="!$ctrl.debugMode" class="tab-pane" id="control-sidebar-settings-tab">
 
       <h3 class="control-sidebar-heading">Legenda Peta</h3>
 

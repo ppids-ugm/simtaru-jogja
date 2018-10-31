@@ -26,6 +26,11 @@ body {
     margin: 0 !important;
   }
 
+  
+  .leaflet-top {
+    display: none;
+  };
+
 }
 
 .pageText {
@@ -56,9 +61,6 @@ hr {
   }
   
 
-  .leaflet-top {
-    display: none;
-  };
 
 @media print {
 

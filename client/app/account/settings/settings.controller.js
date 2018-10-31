@@ -14,8 +14,24 @@ export default class SettingsController {
 
 
   /*@ngInject*/
-  constructor(Auth) {
+  constructor(Auth, $scope) {
     this.Auth = Auth;
+    this.isLoggedIn = Auth.isLoggedInSync;
+    this.isAdmin = Auth.isAdminSync;
+    this.getCurrentUser = Auth.getCurrentUserSync;
+    $scope.auth = Auth;
+    this.$scope = $scope;
+    $scope.isAdmin = false;
+    $scope.me = '';
+
+
+    $scope.auth.hasRole('admin').then(function (val) {
+      $scope.isAdmin = val;
+    });
+
+    $scope.auth.getCurrentUser().then(function (val) {
+      $scope.me = val.name;
+    })
   }
 
   changePassword(form) {

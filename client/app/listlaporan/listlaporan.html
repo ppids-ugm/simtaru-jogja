@@ -43,19 +43,20 @@
                   <tr style="text-align: center" ng-repeat="x in data | filter:q as results track by $index">
                     <td>{{ $index + 1 }}</td>
                     <td ng-if="isAdmin" ng-repeat="user in users | filter: {_id: x.user} as usernum">{{user.name}}</td>
-                    <td ng-if="!usernum.length">-</td>
+                    <td ng-if="!usernum.length && !me.name">-</td>
                     <td ng-if="!isAdmin">{{me.name}}</td>
                     <td>{{x.waktu | date:'MM/dd/yyyy h:mm a'}}</td>
                     <td>{{x.zonasi.zona}}</td>
                     <td> {{x.keteranganBgn.luasTanah}} m<sup>2</sup></td>
-                    <td><a ng-href="print/{{x._id}}"><i class="fa fa-print"></i> </a></td>
+                    <td><a ng-href="print/{{x._id}}"><i class="fa fa-print fa-2x"></i> </a></td>
                   </tr>
-                  <div ng-if="results.length===0">
-                      No items found
-                  </div>
+
 
                 </tbody>
               </table>
+              <div ng-if="results.length===0">
+                  Belum ada laporan terdaftar
+              </div>
             </div>
 
           </div>

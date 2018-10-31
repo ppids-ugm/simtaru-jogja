@@ -17,10 +17,25 @@ export class NavbarComponent {
 
   constructor(Auth, $scope) {
     'ngInject';
-    
     this.isLoggedIn = Auth.isLoggedInSync;
     this.isAdmin = Auth.isAdminSync;
     this.getCurrentUser = Auth.getCurrentUserSync;
+    $scope.auth = Auth;
+    this.$scope = $scope;
+    $scope.isAdmin = false;
+    $scope.me = '';
+
+
+    $scope.auth.hasRole('admin').then(function (val) {
+      $scope.isAdmin = val;
+    });
+
+    $scope.auth.getCurrentUser().then(function (val) {
+      $scope.me = val.name;
+    })
+
+
+
   }
 
 

@@ -1,14 +1,84 @@
 <div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+      Manajemen Pengguna
+      <small>Hapus dan tambah pengguna</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a ui-sref="main"><i class="fa fa-dashboard"></i> Halaman Depan</a></li>
+      <li class="active">Manajemen Pengguna</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+      <div class="row">
+          <div class="col-xs-12">
+            <div class="box">
+              <div class="box-body">
+                <div class="row">
+                    <div class="col-sm-5" style="padding-bottom:10px">
+                        <label class="col-md-2">Cari: </label>
+                        <div class="col-md-10">
+                          <input type="search" class="form-control" ng-model="q" placeholder="Cari berdasarkan nama" />
+                        </div>
+                    </div>
+                    <div class="col-md-3  col-md-offset-4">
+                        <button class="btn btn-success btn-block" ui-sref="signup"><i class="fa fa-plus"></i> Tambah Pengguna Baru</button>
+                    </div>
+                </div>
+                
+                <br/>
+                <div class="col-sm-12">
+                  <table class="table table-bordered table-hover">
+                    <thead>
+                      <tr style="text-align:center">
+                        <th>No.</th>
+                        <th>Nama Pengguna</th>
+                        <th>Email</th>
+                        <th>Alamat</th>
+                        <th>Tanggal Daftar</th>
+                        <th>Hapus Pengguna</th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="text-align:center" ng-repeat="user in admin.users | filter:q as results track by $index">
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{user.name}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.alamat}}</td>
+                        <td>{{user.date | date:'MM/dd/yyyy h:mm a'}}</td>                      
+                        <td><a ng-click="admin.delete(user)" class="trash"><span class="fa fa-trash fa-2x"></span></a></td>
+                      </tr>    
+                    </tbody>
+                  </table>
+
+                </div>
+    
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+    
+          </div>
+          <!-- /.col -->
+        </div>
+  </section>
+</div>
+
+
+<!--div class="content-wrapper">
 
   <p>Manajemen Pengguna</p>
   <ul class="list-group user-list">
     <li class="list-group-item" ng-repeat="user in admin.users">
-	    <div class="user-info">
-	        <strong>{{user.name}}</strong><br>
-	        <span class="text-muted">{{user.email}}</span>
-	    </div>
-        <a ng-click="admin.delete(user)" class="trash"><span class="fa fa-trash fa-2x"></span></a>
+      <div class="user-info">
+        <strong>{{user.name}}</strong><br>
+        <span class="text-muted">{{user.email}}</span>
+      </div>
+      <a ng-click="admin.delete(user)" class="trash"><span class="fa fa-trash fa-2x"></span></a>
     </li>
   </ul>
 
-</div>
+</div-->

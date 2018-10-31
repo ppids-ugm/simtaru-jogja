@@ -1,51 +1,71 @@
 <div class="content-wrapper">
-  <div class="row">
-    <div class="col-sm-12">
-      <h1>Change Password</h1>
+  <section class="content-header">
+    <h1>
+      Profil Pengguna
+      <small>Rubah Password</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a ui-sref="main"><i class="fa fa-dashboard"></i> Halaman Depan</a></li>
+      <li class="active">Profil Pengguna</li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="box">
+        <div class="box-body">
+          <div class="col-sm-6" style="text-align:center">
+            <img ng-show="isAdmin" src="../../assets/images/admin.png" class="img-circle" style="max-width:300px; max-height: 300px;">
+            <img ng-show="!isAdmin" src="../../assets/images/user.png" class="img-circle" style="max-width:300px; max-height: 300px;">
+            <h3>{{me}}</h3>
+            <p ng-show="isAdmin">Status: <strong> Admin </strong></p>
+            <p ng-show="!isAdmin">Status: <strong> User </strong></p>
+
+          </div>
+          <div class="col-sm-6">
+              <h3>Ubah Password</h3>
+            <form class="form" name="form" ng-submit="vm.changePassword(form)" novalidate>
+              <div class="form-group">
+                <label>Password saat ini</label>
+
+                <input type="password" name="password" class="form-control" ng-model="vm.user.oldPassword"
+                  mongoose-error />
+                <p class="help-block" ng-show="form.password.$error.mongoose">
+                  {{ vm.errors.other }}
+                </p>
+              </div>
+
+              <div class="form-group">
+                <label>Password baru</label>
+
+                <input type="password" name="newPassword" class="form-control" ng-model="vm.user.newPassword"
+                  ng-minlength="3" required />
+                <p class="help-block" ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || vm.submitted)">
+                  Password harus lebih dari dua karakter
+                </p>
+              </div>
+
+              <div class="form-group">
+                <label>Konfirmasi Password</label>
+
+                <input type="password" name="confirmPassword" class="form-control" ng-model="vm.user.confirmPassword"
+                  match="vm.user.newPassword" ng-minlength="3" required="" />
+                <p class="help-block" ng-show="form.confirmPassword.$error.match && vm.submitted">
+                  Password harus sama
+                </p>
+
+              </div>
+
+              <p class="help-block"> {{ vm.message }} </p>
+
+              <button class="btn btn-lg btn-primary" type="submit">Simpan Perubahan</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+
     </div>
-    <div class="col-sm-12">
-      <form class="form" name="form" ng-submit="vm.changePassword(form)" novalidate>
-
-        <div class="form-group">
-          <label>Password saat ini</label>
-
-          <input type="password" name="password" class="form-control" ng-model="vm.user.oldPassword"
-                 mongoose-error/>
-          <p class="help-block" ng-show="form.password.$error.mongoose">
-              {{ vm.errors.other }}
-          </p>
-        </div>
-
-        <div class="form-group">
-          <label>Password baru</label>
-
-          <input type="password" name="newPassword" class="form-control" ng-model="vm.user.newPassword"
-                 ng-minlength="3"
-                 required/>
-          <p class="help-block"
-             ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || vm.submitted)">
-            Password harus lebih dari dua karakter
-          </p>
-        </div>
-
-        <div class="form-group">
-          <label>Konfirmasi Password</label>
-
-          <input type="password" name="confirmPassword" class="form-control" ng-model="vm.user.confirmPassword"
-                 match="vm.user.newPassword"
-                 ng-minlength="3"
-                 required=""/>
-          <p class="help-block"
-             ng-show="form.confirmPassword.$error.match && vm.submitted">
-            Password harus sama
-          </p>
-
-        </div>
-
-        <p class="help-block"> {{ vm.message }} </p>
-
-        <button class="btn btn-lg btn-primary" type="submit">Simpan Perubahan</button>
-      </form>
-    </div>
-  </div>
-</div>
+  </section>
