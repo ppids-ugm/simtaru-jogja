@@ -12,6 +12,9 @@ var UserSchema = new Schema({
     lowercase: true,
     required: true
   },
+  telp: String,
+  alamat: String,
+  date: Date,
   role: {
     type: String,
     default: 'user'
@@ -34,7 +37,10 @@ UserSchema
   .get(function() {
     return {
       name: this.name,
-      role: this.role
+      role: this.role,
+      date: this.date,
+      alamat: this.alamat,
+      telp: this.telp
     };
   });
 
@@ -57,14 +63,14 @@ UserSchema
   .path('email')
   .validate(function(email) {
     return email.length;
-  }, 'Email cannot be blank');
+  }, 'Email tidak boleh kosong');
 
 // Validate empty password
 UserSchema
   .path('password')
   .validate(function(password) {
     return password.length;
-  }, 'Password cannot be blank');
+  }, 'Password tidak boleh kosong');
 
 // Validate email is not taken
 UserSchema
@@ -83,7 +89,7 @@ UserSchema
       .catch(function(err) {
         throw err;
       });
-  }, 'The specified email address is already in use.');
+  }, 'Email yang dimasukkan sudah terdaftar');
 
 var validatePresenceOf = function(value) {
   return value && value.length;
@@ -100,7 +106,7 @@ UserSchema
     }
 
     if(!validatePresenceOf(this.password)) {
-      return next(new Error('Invalid password'));
+      return next(new Error('Password salah'));
     }
 
     // Make salt with a callback

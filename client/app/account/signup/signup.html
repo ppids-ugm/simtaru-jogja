@@ -126,6 +126,18 @@
             </p>
           </div>
 
+          <!-------- ------>
+          <div class="form-group">
+            <label>Alamat</label>
+            <input type="text" name="alamat" class="form-control" ng-model="vm.user.alamat" />
+          </div>
+          <div class="form-group">
+            <label>No. Telp</label>
+            <input type="text" name="telp" class="form-control" ng-model="vm.user.telp" />
+          </div>
+
+          <!-------- ------>
+
           <div class="form-group" ng-class="{ 'has-success': form.password.$valid && vm.submitted,
             'has-error': form.password.$invalid && vm.submitted }">
             <label>Password</label>

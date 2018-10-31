@@ -131,7 +131,7 @@
             <!-- The user image in the navbar-->
             <img src="http://via.placeholder.com/160x160" class="user-image" alt="User Image">
             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-            <span class="hidden-xs">admin</span>
+            <span class="hidden-xs">Admin</span>
           </a>
           <ul class="dropdown-menu">
             <!-- The user image in the menu -->
@@ -161,10 +161,10 @@
             <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-left">
-                <a href="/api/me" class="btn btn-default btn-flat">Profile</a>
+                <a ui-sref="settings" class="btn btn-default btn-flat">Profil</a>
               </div>
               <div class="pull-right">
-                <a ui-sref="logout" class="btn btn-default btn-flat">Sign out</a>
+                <a ui-sref="logout" class="btn btn-default btn-flat">Keluar</a>
               </div>
             </li>
           </ul>
@@ -240,6 +240,12 @@
       </li>
 
       <li class="header">Pengaturan</li>
+      <li ui-sref-active="active">
+          <a ui-sref="listlaporan">
+            <i class="fa fa-book"></i>
+            <span>Daftar Laporan</span>
+          </a>
+        </li>
 
       <li class="treeview" ui-sref-active="active">
         <a ui-sref="admin">

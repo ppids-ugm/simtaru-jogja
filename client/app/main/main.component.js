@@ -1,7 +1,8 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import routing from './main.routes';
-//import 'lobipanel/dist/js/lobipanel.min.js';
+import moment from 'moment';
+
 //const interact = require('interactjs/dist/interact.js');
 
 export class MainController {
@@ -87,7 +88,8 @@ export class MainController {
         fill: "hollow",
         doubleLine: "true",
         showSubunits: "false"
-      }).addTo(map);
+      });
+      graphicScale.addTo(map);
 
 
       //## custom control
@@ -328,6 +330,7 @@ export class MainController {
       });
     } //getFeature from SKRK
 
+    // ----------------- function get kegiatan ---------------------
     //get list of kegiatan di db
     $scope.getKegiatan = function () {
       $http.get('/api/skrks/distinct').then(function (success) {
@@ -423,10 +426,14 @@ export class MainController {
     // ----------------- function simpan pencarian ---------------------
     $scope.simpanPencarian = function (cekIntensitas, intensitas, focusFeature) {
       var userId;
+      //moment.locale('id');
+      var waktu = moment();
+      //console.log(waktu);
       var data = {
         keteranganBgn: cekIntensitas,
         hasilCek: intensitas,
-        zonasi: focusFeature
+        zonasi: focusFeature,
+        waktu: waktu
       };
 
       $scope.auth.getCurrentUser(
@@ -505,12 +512,6 @@ export class MainController {
 
 
 
-    /*
-    var elem = document.querySelector('.draggable');
-    var draggie = new Draggabilly (elem, {
-      handle: '.drag'
-    });
-    */
 
     /*
     $(function () {

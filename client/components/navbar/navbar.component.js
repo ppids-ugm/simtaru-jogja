@@ -11,28 +11,31 @@ export class NavbarComponent {
 
   isCollapsed = true;
 
-  
+
 
   debugMode = true;
 
-  constructor(Auth, $rootScope) {
+  constructor(Auth, $scope) {
     'ngInject';
-
-
+    
     this.isLoggedIn = Auth.isLoggedInSync;
     this.isAdmin = Auth.isAdminSync;
     this.getCurrentUser = Auth.getCurrentUserSync;
-
-
   }
 
 
 
 
   $onInit() {
-    this.getCurrentUser(function(me) {
-      console.log('me.email', me);
-    });
+    this.getCurrentUser(
+      function (me) {        
+        angular.extend($scope, {
+          id: me._id,
+          currentUser : me.name
+        })
+
+        console.log(this.$scope.id);
+      });
   };
 
 

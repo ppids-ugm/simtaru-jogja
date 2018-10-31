@@ -10,6 +10,8 @@
     <div class="box-body">
         <button type="button" ui-sref='main' class="btn btn-info btn-block"> <i class="fa fa-home"></i> Kembali 
         </button>
+        <button type="button" ui-sref='listlaporan' class="btn btn-info btn-block"> <i class="fa fa-book"></i> History laporan 
+        </button>
         <button type="button" ng-click="cetak()" class="btn btn-success btn-block"> <i class="fa fa-print"></i> Cetak 
         </button>
     </div>
@@ -39,11 +41,11 @@
   <br />
   <div class="row">
     <p> Dasar Hukum <br /></p>
-    <div class="col-xs-11 col-xs-offset-1">
-      1. Peraturan Daerah Nomor 2 Tahun 2010 tentang Rencana Tata Ruang Wilayah Kota Yogyakarta Tahun
+    <div class="col-xs-12">
+      &nbsp; 1. Peraturan Daerah Nomor 2 Tahun 2010 tentang Rencana Tata Ruang Wilayah Kota Yogyakarta Tahun
       2010-2029 <br>
-      2. Peraturan Daerah Nomor 2 Tahun 2012 tentang Bangunan Gedung <br>
-      3. Peraturan Daerah Nomor 1 Tahun 2015 tentang Rencana Detil Tata Ruang Kota dan Peraturan Zonasi
+      &nbsp; 2. Peraturan Daerah Nomor 2 Tahun 2012 tentang Bangunan Gedung <br>
+      &nbsp; 3. Peraturan Daerah Nomor 1 Tahun 2015 tentang Rencana Detil Tata Ruang Kota dan Peraturan Zonasi
       Kota Yogyakarta tahun 2015-2025 <br>
     </div>
   </div>
@@ -56,15 +58,17 @@
     </div>
     <div class="row">
       <div class="col-xs-3"> 2. Alamat</div>
-      <div class="col-xs-9">: Seturan RT 01 RW 01 Caturtunggal Depok Sleman Yogyakarta</div>
+      <div class="col-xs-9"><a href="#" editable-textarea="userData.alamat" e-rows="7" e-cols="40">
+         : {{ userData.alamat || '-' }}
+        </a></div>
     </div>
     <div class="row">
       <div class="col-xs-3"> 3. Bukti Hak Atas Tanah/No</div>
-      <div class="col-xs-9">: HGB 2bsd873bdwuwb3f846gw83</div>
+      <div class="col-xs-9"><a href=# editable-text="form.hak" e-label="Masukkan No Bukti Hak atas Tanah">: {{ form.hak || '-' }}</a></div>
     </div>
     <div class="row">
       <div class="col-xs-3"> 4. Fungsi Bangunan</div>
-      <div class="col-xs-9">: - </div>
+      <div class="col-xs-9"><a href=# editable-text="form.fungsi" e-label="Masukkan Fungsi Bangunan">: {{ form.fungsi || '-' }}</a></div>
     </div>
     <div class="row">
       <div class="col-xs-3"> 5. Luas Tanah</div>
@@ -72,12 +76,14 @@
     </div>
     <div class="row">
       <div class="col-xs-3"> 6. Letak Tanah</div>
-      <div class="col-xs-9">: Jl. HOS Cokroaminoto No. 145 RT35 Bulaksumur Yogyakarta ksadfnaskfnekbaklbs aksjcbajhcb
-        alkjfnkabf alskjncake </div>
+      <div class="col-xs-9"><a href="#" editable-textarea="form.lokasi" e-rows="7" e-cols="40">
+          : {{ form.lokasi || '-' }}
+         </a> 
+      </div>
     </div>
     <div class="row">
-      <div class="col-xs-3"> 7. Nomor</div>
-      <div class="col-xs-9">: {{printCtrl.param.printId}} </div>
+      <div class="col-xs-3"> 7. Nomor Telp.</div>
+      <div class="col-xs-9">: {{userData.telp || '-'}} </div>
     </div>
     <br />
     <p> Dengan ketentuan-ketentuan sebagai berikut:</p>
@@ -92,7 +98,7 @@
     </div>
     <div class="row">
       <div class="col-xs-5"> 3. Intensitas</div>
-      <div class="col-xs-7">{{advisData.hasilCek.keterangan}} m<sup>2</sup> </div>
+      <div class="col-xs-7">{{advisData.hasilCek.kelas}} </div>
     </div>
 
     <p> Tampilan peta:</p>

@@ -25,6 +25,12 @@ export class PrintComponent {
     $scope.advisData = {};
     $scope.userData = {};
     $scope.tanggal = '';
+    $scope.form = {
+      fungsi: 'Fungsi bangunan',
+      alamat: 'Masukkan alamat lengkap Anda',
+      hak: 'Nomor Bukti Hak Atas Tanah',
+      lokasi: 'Lokasi tanah yang diperiksa'
+    };
 
     $scope.getUserData = function (id) {
       $http.get('/api/users/' + id).then(function (success) {

@@ -7,7 +7,8 @@ var AdviceplanSchema = new mongoose.Schema({
   user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   keteranganBgn: mongoose.Schema.Types.Mixed,
   hasilCek: mongoose.Schema.Types.Mixed,
-  zonasi: mongoose.Schema.Types.Mixed
+  zonasi: mongoose.Schema.Types.Mixed,
+  waktu: Date
 });
 
 registerEvents(AdviceplanSchema);

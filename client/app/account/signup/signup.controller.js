@@ -1,11 +1,14 @@
 'use strict';
 
 import angular from 'angular';
+import moment from 'moment';
 
 export default class SignupController {
   user = {
     name: '',
     email: '',
+    telp:'',
+    alamat:'',
     password: ''
   };
   errors = {};
@@ -22,10 +25,15 @@ export default class SignupController {
   register(form) {
     this.submitted = true;
 
+    var registrationDate = moment();
+
     if(form.$valid) {
       return this.Auth.createUser({
         name: this.user.name,
+        telp: this.user.telp,
+        alamat: this.user.alamat,
         email: this.user.email,
+        date: registrationDate,
         password: this.user.password
       })
         .then(() => {
