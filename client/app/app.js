@@ -29,6 +29,7 @@ import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
 import AdminlteComponent from './adminlte/adminlte.component';
 import PrintComponent from './print/print.component';
+import PersilComponent from './persil/persil.component';
 import ListlaporanComponent from './listlaporan/listlaporan.component';
 
 
@@ -36,7 +37,7 @@ import ListlaporanComponent from './listlaporan/listlaporan.component';
 import './app.scss';
 
 angular.module('starlingApp', [ngCookies, ngResource, ngSanitize, ngAnimate, ngTouch, 'btford.socket-io', uiRouter,
-  _Auth, account, admin, 'validation.match', navbar, footer, main, constants, AdminlteComponent, PrintComponent, ListlaporanComponent,  socket, util, 'nemLogging', 'ui-leaflet', 'xeditable', 'toastr'
+  _Auth, account, admin, 'validation.match', navbar, footer, main, constants, AdminlteComponent, PrintComponent, ListlaporanComponent, PersilComponent,  socket, util, 'nemLogging', 'ui-leaflet', 'xeditable', 'toastr'
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

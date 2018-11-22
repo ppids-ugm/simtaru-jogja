@@ -11,7 +11,7 @@ export class AdminlteComponent {
   
 
   constructor($scope) {
-    this.message = '432444';
+    
     this.$scope = $scope;
     this.center = {
       lat: -7.7830961,
@@ -61,9 +61,9 @@ export class AdminlteComponent {
             name: 'SG-PAG',
             type: 'wms',
             visible: true,
-            url: 'http://localhost:8089/geoserver/simtaru/wms',
+            url: 'http://geoportal.ppids.ft.ugm.ac.id/geoserver/sitaru/wms',
             layerOptions: {
-              layers: 'simtaru:rdtr_kota',
+              layers: 'sitaru:bidangtanah',
               format: 'image/png',
               opacity: 0.75,
               version: '1.1.0',

@@ -1,9 +1,11 @@
-'use strict';
+//'use strict';
 const angular = require('angular');
-
 const uiRouter = require('angular-ui-router');
 
 import routes from './persil.routes';
+//import '';
+
+
 
 export class PersilComponent {
   /*@ngInject*/

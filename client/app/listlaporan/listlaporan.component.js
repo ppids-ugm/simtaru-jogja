@@ -38,7 +38,7 @@ export class ListlaporanComponent {
         });
 
       } else {
-        console.log ('chill bro');
+        //console.log ('chill bro');
         $scope.auth.getCurrentUser().then(function (val) {
           $scope.me.name = val.name;
           $scope.me.id = val._id;
@@ -50,6 +50,23 @@ export class ListlaporanComponent {
             console.log($scope.data);            
         });
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
 
         
         

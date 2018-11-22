@@ -29,7 +29,8 @@ export class PrintComponent {
       fungsi: 'Fungsi bangunan',
       alamat: 'Masukkan alamat lengkap Anda',
       hak: 'Nomor Bukti Hak Atas Tanah',
-      lokasi: 'Lokasi tanah yang diperiksa'
+      lokasi: 'Lokasi tanah yang diperiksa',
+      GSB: '3m - 6m - 3m'
     };
 
     $scope.getUserData = function (id) {
@@ -76,7 +77,7 @@ export class PrintComponent {
     //get current date for sign column
     moment.locale('id');
     $scope.tanggal = moment().format('LL');
-    console.log($scope.tanggal);
+    //console.log($scope.tanggal);
 
 
     $scope.map = {

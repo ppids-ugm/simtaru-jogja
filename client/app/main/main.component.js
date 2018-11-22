@@ -242,8 +242,12 @@ export class MainController {
       var url_geojson = 'http://geoportal.ppids.ft.ugm.ac.id/geoserver/sitaru/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=sitaru%3Apola_ruang_rdtr&outputFormat=text%2Fjavascript&srsName:EPSG:4326';
       // JSONP must use $sce for trusted url
       $http.jsonp($sce.trustAsResourceUrl(url_geojson))
-        .then(function (response) {})
-        .catch(function (error) {});
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log(error)
+        });
     }; //getdata
 
     //## Defining Leaflet map object
@@ -253,6 +257,7 @@ export class MainController {
           esri: {
             name: 'ESRI Imagery',
             type: 'xyz',
+            maxZoom: 21,
             url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
             layerOptions: {
               attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
@@ -264,7 +269,6 @@ export class MainController {
             url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png',
             layerOptions: {
               subdomains: 'abcd',
-              maxZoom: 19,
               attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
               continuousWorld: true
             }
