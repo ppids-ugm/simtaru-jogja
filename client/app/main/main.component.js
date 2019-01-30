@@ -257,10 +257,12 @@ export class MainController {
           esri: {
             name: 'ESRI Imagery',
             type: 'xyz',
-            maxZoom: 21,
             url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
             layerOptions: {
-              attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+              attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+              minZoom: 10,
+              maxZoom: 25,
+              maxNativeZoom: 21,
             }
           },
           carto: {
@@ -268,6 +270,7 @@ export class MainController {
             type: 'xyz',
             url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png',
             layerOptions: {
+              maxZoom: 25,
               subdomains: 'abcd',
               attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
               continuousWorld: true
@@ -279,6 +282,7 @@ export class MainController {
             url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             layerOptions: {
               subdomains: ['a', 'b', 'c'],
+              maxZoom: 25,
               attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
               continuousWorld: true
             }

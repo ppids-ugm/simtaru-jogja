@@ -33,9 +33,9 @@
   </div>
   <hr>
   <div class="row">
-    <h4 class="pageText"><strong> Surat Keterangan Rencana Kota (SKRK) </strong></h4>
+    <h4 class="pageText"><strong> Advice Planning (Surat Keterangan Rencana Kota) </strong></h4>
     <p class="pageText"> Untuk Persyaratan Permohonan IMB</p>
-    <p class="pageText small">Nomor: 1053/AP/DPMP/XI/2017</p>
+    <p class="pageText small">Nomor: 001/AP-SKRK/DPTR/I/2019</p>
   </div>
   <br />
   
@@ -86,21 +86,37 @@
       <div class="col-xs-9">: {{userData.telp || '-'}} </div>
     </div>
     <br />
-    <p> Dengan ketentuan-ketentuan sebagai berikut:</p>
+    <div class="row">
+      <p> Tampilan peta:</p>
+      <leaflet id="printmap" layers="map.layers" height="350px" width="80%" style="display:block; margin-left:auto; margin-right:auto;"></leaflet>  
+
+    </div>
+    <br/>
+    
+  </div> <!-- page 1-->
+</div> <!-- page 1-->
+
+  <div class="page">
+    <div class="pagebreak"></div>
     <p> KETENTUAN TATA RUANG</p>
     <div class="row">
-      <div class="col-xs-5"> 1. Pola Pemanfaatan Ruang</div>
-      <div class="col-xs-7">{{advisData.zonasi.kode}} ( {{advisData.zonasi.zona}} ) </div>
+      <div class="col-xs-5"> 1. Status Kawasan</div>
+      <div class="col-xs-7">{{advisData.zonasi.pola_ruang}}</div>
     </div>
     <div class="row">
-      <div class="col-xs-5"> 2. Kawasan</div>
-      <div class="col-xs-7">{{advisData.zonasi.pola_ruang}}</div>
+      <div class="col-xs-5"> 2. Pola Pemanfaatan Ruang</div>
+      <div class="col-xs-7">{{advisData.zonasi.kode}} ( {{advisData.zonasi.zona}} ) </div>
     </div>
     <div class="row">
       <p> Tampak Potongan </p>
       <img src="/assets/images/DenahGSB.png" style="max-height:180px; display:block; margin-left:auto; margin-right:auto;">
     </div>
     <br>
+    <!--div class="row">
+      <div class="col-xs-5"> 3. Ketentuan Zonasi</div>
+      <div class="col-xs-7">  </div>
+    </div-->
+
     <div class="row">
       <div class="col-xs-5"> 3. Garis Sempadan Bangunan (GSB)</div>
       <div class="col-xs-7">
@@ -124,17 +140,7 @@
       <div class="col-xs-7">{{advisData.hasilCek.keterangan}} m<sup>2</sup>= {{advisData.hasilCek.KLB}}</div>
     </div>
 
-  </div>
-
-
-</div> <!-- page 1-->
-<div class="page">
-  
-  <div class="pagebreak"></div>
-  <br />
-  <p> Tampilan peta:</p>
-    <leaflet id="printmap" layers="map.layers" height="180px" width="80%" style="display:block; margin-left:auto; margin-right:auto;"></leaflet>
-    <br />
+    
   <div class="row">
     <div class="col-xs-5"> 6. TB (Tinggi Bangunan dari permukaan rata-rata tanah sampai dengan garis potong permukaan
       atap)</div>
@@ -160,21 +166,7 @@
     <div class="col-xs-5">8. KDH (Luas taman/tidak boleh perkerasan)</div>
     <div class="col-xs-7">10.0% dari Luas Tanah atau minimal luas = {{advisData.hasilCek.KDH}} meter persegi </div>
   </div>
-  <div class="row">
-    <div class="col-xs-5">9. RTH Privat</div>
-    <div class="col-xs-7">
-
-      <div class="col-xs-5" style="padding:0">a. LT 500 m<sup>2</sup> atau lebih</div>
-      <div class="col-xs-7">Wajib ditanami minimal 3 (tiga) pohon perindang, tanaman perdu, semak serta penutup
-        tanah/rumput dengan jumlah yang cukup</div>
-
-      b. Untuk kepentingan estetika bangunan, penempatan RTH Privat, seluruhnya atau sebagian penempatannya wajib di
-      depan bangunan yang direncanakan <br />
-      c. Apabila dalam ketentuan Garis Sempadan Bangunan (GSB) 0 (nol), maka kegiatan membangun wajib menyediakan
-      penghijauan berbentuk pot di depan bangunan yang dituangkan dalam surat pernyataan.
-    </div>
-  </div>
-
+  </br>
   <div class="row">
     <p> KETERANGAN</p>
     <p>
@@ -208,6 +200,7 @@
 
     </div>
   </div>
+</div>
 
 
 </div> <!-- page 2-->

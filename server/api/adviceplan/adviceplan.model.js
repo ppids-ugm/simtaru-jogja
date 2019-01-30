@@ -8,6 +8,7 @@ var AdviceplanSchema = new mongoose.Schema({
   keteranganBgn: mongoose.Schema.Types.Mixed,
   hasilCek: mongoose.Schema.Types.Mixed,
   zonasi: mongoose.Schema.Types.Mixed,
+  form: mongoose.Schema.Types.Mixed,
   waktu: Date
 });
 
