@@ -17,6 +17,23 @@ export default class LoginController {
     this.Auth = Auth;
     this.$state = $state;
     this.toastr = toastr;
+    this.adminLogin = false;
+  }
+
+  loginTamu(){
+    console.log('c');
+    this.user.email = "tamu@sitaru.com";
+    this.user.password = "tamu" 
+    this.Auth.login({
+      email: this.user.email,
+      password: this.user.password
+    })
+    .then(() => {
+      this.toastr.success('Masuk sebagai tamu');
+      // Logged in, redirect to home
+      this.$state.go('main');
+    })
+
   }
 
   login(form) {

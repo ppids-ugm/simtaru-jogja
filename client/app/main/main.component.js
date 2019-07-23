@@ -19,6 +19,7 @@ export class MainController {
     this.$scope = $scope;
     $scope.toastr = toastr;
     $scope.auth = Auth;
+    this.isAdmin = Auth.isAdminSync;
     $rootScope.show = true;
     this.leafletData = leafletData;
 
@@ -51,7 +52,6 @@ export class MainController {
       KDH: ''
     };
 
-
     //Jogja;
     $scope.center = {
       lat: -7.8049497,
@@ -66,13 +66,19 @@ export class MainController {
     // initializing map with controls
     leafletData.getMap('mainmap').then(function (map) {
 
-      L.control.locate({
-        position: 'topright'
+      // sidebar panel leaflet v2
+      var sidebar = L.control.sidebar({
+          container: 'sidebar',
+          position: 'right'
+        })
+        .addTo(map);
 
-      }).addTo(map);
+      var mapbuttons_div = L.DomUtil.create('div', 'mapbuttons leaflet-bar leaflet-control');
 
-      L.Control.geocoder().addTo(map);
-      
+      var zoom = L.control.zoom({}).addTo(map);
+
+      var locateControl = L.control.locate({}).addTo(map);
+      var geocoderControl = L.Control.geocoder().addTo(map);
       var measureControl = L.control.measure({
         position: 'topright',
         primaryLengthUnit: 'meters',
@@ -80,8 +86,12 @@ export class MainController {
         primaryAreaUnit: 'sqmeters',
         activeColor: '#FF5A00',
         completedColor: '##EAFF00'
-      });
-      measureControl.addTo(map);
+      }).addTo(map);
+
+      mapbuttons_div.appendChild(zoom.getContainer());
+      mapbuttons_div.appendChild(locateControl.getContainer());
+      mapbuttons_div.appendChild(geocoderControl.getContainer());
+      mapbuttons_div.appendChild(measureControl.getContainer());
 
 
       var graphicScale = L.control.graphicScale({
@@ -91,38 +101,86 @@ export class MainController {
       });
       graphicScale.addTo(map);
 
-
       //## custom control
 
-      /*
-      L.control.custom({
-          position: 'topright',
-          content: '<button type="button" class="btn btn-default">' +
-            '    <i class="fa fa-search"></i>' +
-            '</button>',
-          classes: '',
-          style: {
-            margin: '10px',
-            padding: '0px 0 0 0',
-            cursor: 'pointer',
-          },
-          datas: {
-            'foo': 'bar',
-          },
-          events: {
-            click: function (data) {
+      $scope.togler = true;
+      var toggleLayer = function(){
+        console.log('tonggling');
+        console.log($scope.togler);
 
-              //$('#myModal').modal('show'); 
-              //console.log('wrapper div element clicked');
-              //console.log(data);
-            }
+        //if (togler  === false) {
+        //  sliderControl.addTo(map);
+        //  togler  = true;
+        //} else {
+        //  map.removeControl(sliderControl);
+        //  togler  = false
+        //}
+
+      }
+
+
+      
+      var listLayer = {
+        id: 'listLayer', // UID, used to access the panel
+        tab: '<i class="fa fa-list-alt"></i>', // content can be passed as HTML string,
+        
+        position: 'top' // optional vertical alignment, defaults to 'top'
+      };
+      sidebar.addPanel(listLayer);
+
+      var toolboxControls = {
+        id: 'toolboxControls', // UID, used to access the panel
+        tab: '<i class="fa fa-briefcase"></i>', // content can be passed as HTML string,
+        pane: 'mapbuttons_div', // DOM elements can be passed, too
+        title: 'Peralatan', // an optional pane header
+        position: 'top' // optional vertical alignment, defaults to 'top'
+      };
+      sidebar.addPanel(toolboxControls);
+
+      var showGScale = true;
+      sidebar.addPanel({
+        id: 'graphicScale',
+        tab: '<i class="fa fa-barcode"></i>',
+        button: function () {
+          if (showGScale === false) {
+            graphicScale.addTo(map);
+            showGScale = true;
+          } else {
+            map.removeControl(graphicScale)
+            showGScale = false
           }
-        })
-        .addTo(map); */
+        }
+      });
+
+      var showSlider = true;
+      sidebar.addPanel({
+        id: 'sliderControl',
+        tab: '<i class="fa fa-sliders"></i>',
+        button: function () {
+          if (showSlider === false) {
+            sliderControl.addTo(map);
+            showSlider = true;
+          } else {
+            map.removeControl(sliderControl)
+            showSlider = false
+          }
+        }
+      });
+
+      var panelInfo = {
+        id: 'userinfo', // UID, used to access the panel
+        tab: '<i class="fa fa-info"></i>', // content can be passed as HTML string,
+        pane: 'mapbuttons_div', // DOM elements can be passed, too
+        title: 'Daftar Layer', // an optional pane header
+        position: 'bottom' // optional vertical alignment, defaults to 'top'
+      };
+      sidebar.addPanel(panelInfo);
+
+
 
 
       //slider toolbar. 
-      L.control.custom({
+      var sliderControl = L.control.custom({
           position: 'bottomright',
           /*content: '<div class="input-group">' +
             '    <input type="text" class="form-control input-sm" placeholder="Search">' +
@@ -143,8 +201,8 @@ export class MainController {
           style: {
             width: '200px'
           },
-        })
-        .addTo(map);
+        });
+        sliderControl.addTo(map);
     });
 
 
@@ -176,6 +234,22 @@ export class MainController {
 
       // Initializing data from GeoJSONP
       leafletData.getMap('mainmap').then(function (map) {
+
+        // layers
+        var bidangtanah = L.tileLayer.wms('http://geoportal.ppids.ft.ugm.ac.id/geoserver/sitaru/wms?', {
+          layers: 'sitaru:bidang_tanah_tujuh_edit',
+          format: 'image/png',
+          transparent: true
+        }).addTo(map);
+
+        var jalangsb = L.tileLayer.wms('http://geoportal.ppids.ft.ugm.ac.id/geoserver/sitaru/wms?', {
+          layers: 'sitaru:jalan_gsb',
+          tiled: true,
+          format: 'image/png',
+          transparent: true
+        }).addTo(map);
+
+
 
         var rdtrGeoJSON = new L.GeoJSON(null, {
           style: zonaStyle,
@@ -216,7 +290,8 @@ export class MainController {
               $scope.focusFeature = feature.properties;
               this.setStyle({
                 "weight": 5
-              });
+              }
+              );
               angular.extend($scope.focusFeature, {
                 'koordinat': e.latlng
               });
@@ -229,17 +304,15 @@ export class MainController {
 
         rdtrGeoJSON.addData(data).addTo(map);
 
-
-
-
       }); //parse response
     }
 
     //## Angular load Geoserver GeoJSON via JSONP (setup Geoserver JSONP first)
     $scope.getData = function () {
       // Geoserver endpoint. Change accordingly
-      //var url_geojson = 'http://localhost:8089/geoserver/simtaru/ows?service=WFS&version=1.0.0&request=GetFeature&//typeName=simtaru:rdtr_kota&outputFormat=text%2Fjavascript&srsName:EPSG:4326';
+      //var url_geojson = 'http://localhost:8080/geoserver/sitaru/ows?service=WFS&version=1.0.0&request=GetFeature&//typeName=sitaru:pola_ruang_rdtr&outputFormat=text%2Fjavascript&srsName:EPSG:4326';
       var url_geojson = 'http://geoportal.ppids.ft.ugm.ac.id/geoserver/sitaru/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=sitaru%3Apola_ruang_rdtr&outputFormat=text%2Fjavascript&srsName:EPSG:4326';
+      //var url_geojson = 'http://localhost:8080/geoserver/sitaru/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=sitaru%3APola_Ruang_RDTR&outputFormat=text%2Fjavascript&srsName:EPSG:4326';
       // JSONP must use $sce for trusted url
       $http.jsonp($sce.trustAsResourceUrl(url_geojson))
         .then(function (response) {
@@ -259,6 +332,7 @@ export class MainController {
             type: 'xyz',
             url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
             layerOptions: {
+              showOnSelector: false,
               attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
               minZoom: 10,
               maxZoom: 25,
@@ -270,6 +344,7 @@ export class MainController {
             type: 'xyz',
             url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png',
             layerOptions: {
+              showOnSelector: false,
               maxZoom: 25,
               subdomains: 'abcd',
               attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
@@ -281,6 +356,7 @@ export class MainController {
             type: 'xyz',
             url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             layerOptions: {
+              showOnSelector: false,
               subdomains: ['a', 'b', 'c'],
               maxZoom: 25,
               attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -356,7 +432,7 @@ export class MainController {
     // ----------------- function cek pemanfaatan ---------------------
     $scope.cekPemanfaatan = function (pemanfaatan, kodeSKRK) {
       //console.log('pemanfaatan', pemanfaatan);
-      
+
       //# pengkelasan sesuai /api/intensitasruangs
       if (pemanfaatan.luasTanah < 40) {
         $scope.intensitas.error = true;
@@ -423,7 +499,7 @@ export class MainController {
 
 
         // Tampilkan KDH
-        $scope.intensitas.KDH = (success.data[0].KDH[kodeSKRK]*pemanfaatan.luasTanah)/100;
+        $scope.intensitas.KDH = (success.data[0].KDH[kodeSKRK] * pemanfaatan.luasTanah) / 100;
 
       }, function (error) {
         console.log('error', error.data);
@@ -458,7 +534,7 @@ export class MainController {
           }).then(function (success) {
             $scope.toastr.success('Data berhasil disimpan!');
             console.log('simpan pencarian', success.data);
-            $window.location.href = '/print/'+success.data._id;
+            $window.location.href = '/print/' + success.data._id;
           });
         });
 
@@ -617,3 +693,29 @@ this.$http.get('/api/things')
             }
           }
           */
+
+      /*
+      L.control.custom({
+          position: 'topright',
+          content: '<button type="button" class="btn btn-default">' +
+            '    <i class="fa fa-search"></i>' +
+            '</button>',
+          classes: '',
+          style: {
+            margin: '10px',
+            padding: '0px 0 0 0',
+            cursor: 'pointer',
+          },
+          datas: {
+            'foo': 'bar',
+          },
+          events: {
+            click: function (data) {
+
+              //$('#myModal').modal('show'); 
+              //console.log('wrapper div element clicked');
+              //console.log(data);
+            }
+          }
+        })
+        .addTo(map); */

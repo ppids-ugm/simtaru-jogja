@@ -233,17 +233,23 @@
       <li ui-sref-active="active">
         <a href="/">
           <i class="fa fa-map"></i>
-          <span>Peta Tata Ruang</span>
+          <span>Sistem Informasi Tata Ruang</span>
         </a>
       </li>
       <li ui-sref-active="active">
         <a ui-sref="adminlte">
           <i class="fa fa-flag"></i>
-          <span>Dashboard Kasultanan</span>
+          <span>Sistem Informasi Pertanahan</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a href="/">
+          <i class="fa fa-map"></i>
+          <span>Galeri Peta</span>
         </a>
       </li>
 
-      <li class="header">Pengaturan</li>
+      <li ng-show="isAdmin" class="header">Pengaturan</li>
       <li ui-sref-active="active">
         <a ui-sref="listlaporan">
           <i class="fa fa-book"></i>

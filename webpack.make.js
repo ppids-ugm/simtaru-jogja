@@ -82,7 +82,9 @@ module.exports = function makeWebpackConfig(options) {
         'leaflet-easyprint',
         'leaflet-graphicscale',
         'leaflet.locatecontrol',
-        'leaflet-control-geocoder'
+        'leaflet-control-geocoder',
+        'leaflet-sidebar-v2'
+        //'ol'
         
       ]
     };

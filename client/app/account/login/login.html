@@ -58,15 +58,23 @@
         <p style="text-align:center; color:white"> Kota Yogyakarta</p>
         <!--br-->
         <hr style="border-color:gray">
-        <p style="text-align:center; color:gray"> Copyright@2018 </p>
+        <p style="text-align:center; color:gray"> Copyright@2019 </p>
 
       </div>
       <div class="signin-form">
-        <p class="btn btn-lg btn-outline btn-block signin-title"> Masuk SITARU </p>
-        <p style="text-align:center"><i>Masukkan email dan password anda. Apabila belum terdaftar, silahkan klik
-          <a href="/signup" data-toggle="tooltip" title="Daftar Baru"> Daftar</a> </i></p>
         <br>
-        <form class="form" name="form" ng-submit="vm.login(form)" novalidate>
+        <p class="btn btn-lg btn-outline btn-block signin-title"> Masuk SITARU </p>
+        <p style="text-align:center"><i>Silahkan masuk sebagai Tamu atau LogIn Admin Sitaru</i></p>
+        <!--p style="text-align:center"><i>Masukkan email dan password anda. Apabila belum terdaftar, silahkan klik
+          <a href="/signup" data-toggle="tooltip" title="Daftar Baru"> Daftar</a> </i></p-->
+        
+        <div ng-hide="vm.adminLogin">
+          <br>
+          <button type="button" class="btn btn-lg btn-info btn-block" ng-click="vm.loginTamu()">Tamu </button>
+          <button type="button" class="btn btn-lg btn-success btn-block" ng-click="vm.adminLogin = true">Administrator</button>
+        </div> 
+
+        <form class="form" name="form" ng-submit="vm.login(form)" novalidate ng-show="vm.adminLogin">
           <div class="form-group">
             <label>Email</label>
             <div class="input-group">
@@ -74,9 +82,7 @@
               <input type="email" name="email" class="form-control" ng-model="vm.user.email" aria-describedby="basic-addon1" required>
             </div>
             <p class="help-block">Ketikkan email yang telah terdaftar</p>
-
           </div>
-
           <div class="form-group">
             <label>Password</label>
             <div class="input-group">
@@ -99,8 +105,11 @@
 
           <div class="text-right">
             <button class="btn btn-primary btn-lg btn-material btn-login" type="submit" data-toggle="tooltip" title="Existing user">
-              Masuk
+              Masuk Admin
             </button>
           </div>
+          <br>
+
+          <a style="cursor:pointer" ng-click="vm.adminLogin = false" class="help-block"><i class="fa fa-arrow-left"></i>  Kembali ke halaman sebelumya</a>
         </form>
       </div>
