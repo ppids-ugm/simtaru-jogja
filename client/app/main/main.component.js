@@ -283,7 +283,7 @@ export class MainController {
     $scope.getData = function () {
 
       // Geoserver endpoint. Change accordingly
-      var url_geojson = 'http://geoportal.ppids.ft.ugm.ac.id/geoserver/sitaru/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=sitaru%3Apola_ruang_rdtr&outputFormat=text%2Fjavascript&srsName:EPSG:4326';
+      var url_geojson = 'http://geoportal.ppids.ft.ugm.ac.id/geoserver/sitaru/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=sitaru%3Apola_ruang_rdtr&outputFormat=text%2Fjavascript&srsName:EPSG:4326&callback=parseResponse';
       //var url_geojson = 'http://localhost:8080/geoserver/sitaru/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=sitaru%3APola_Ruang_RDTR&outputFormat=text%2Fjavascript&srsName:EPSG:4326';
       // JSONP must use $sce for trusted url
 
@@ -291,6 +291,7 @@ export class MainController {
         .then(
           function (response) {
             console.log(response);
+            //parseResponse(response);
           },
           function (error) {
             console.log(error);
