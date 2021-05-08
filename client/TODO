@@ -1,0 +1,46 @@
+
+  /*
+  ##### TODO #####
+  <skipped> Install leaflet search 
+  <fixed> Move icons to top right
+  <fixed> Fix leaflet control with layer
+  <fixed> change input 'select' with 'type'
+  <fixed> Make panel draggable
+  <fixed> Add scalebar plugin
+  <fixed> print function
+  <fixed> Add QR COde/Validation Code
+  <partial-fixed> Fix User Management
+  * tambah Disclaimer
+  * Create function add layer
+  * Add menu report (lapor penyalahgunaan ruang)
+  * add form as mongo schema (advisplanings)
+  * add nomor surat advis planing
+  * GSB as list from mongoDB
+  * Add locateme
+  * Add pdf viewer
+  * Refactoring Develop branch
+  * Merge to master
+
+
+  */
+
+  .pulse {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 2px solid #029edf;
+    background: #029edf;
+    cursor: pointer;
+    box-shadow: 0 0 0 rgba(2,158,223, 0.4);
+    animation: pulse 1s infinite;
+    margin: 0px;
+    position: absolute;
+    left: -4px;
+    top: -4px;
+    // opacity: 0.5;
+    // background: none;
+}
+.pulse:hover {
+  animation: none;
+}
